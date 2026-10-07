@@ -1,13 +1,67 @@
 services:
-  app:
-    build:
-      context: .
-      dockerfile: dockerfile
-    ports:
-      - "3000:3000"
+  db-bateponto:
+    image: milenamitie/mysql-bateponto:latest
+    container_name: db-bateponto
+    restart: unless-stopped
     environment:
-      DB_HOST: host.docker.internal
-      DB_USER: root
-      DB_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: bateponto
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-${DB_PASSWORD:?Defina DB_PASSWORD no arquivo .env}}
+      MYSQL_USER: bateponto
+      MYSQL_PASSWORD: ${DB_PASSWORD:?Defina DB_PASSWORD no arquivo .env}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    expose:
+      - "3306"
+    networks:
+      - bateponto-network
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  backend-bateponto:
+    image: milenamitie/backend-bateponto:latest
+    container_name: backend-bateponto
+    restart: unless-stopped
+    environment:
+      DB_HOST: db-bateponto
+      DB_USER: bateponto
+      DB_PASSWORD: ${DB_PASSWORD:?Defina DB_PASSWORD no arquivo .env}
       DB_NAME: bateponto
       DB_PORT: 3306
+      TZ: America/Sao_Paulo
+    expose:
+      - "3000"
+    depends_on:
+      db-bateponto:
+        condition: service_healthy
+    networks:
+      - bateponto-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  frontend-bateponto:
+    image: milenamitie/frontend-bateponto:latest
+    container_name: frontend-bateponto
+    restart: unless-stopped
+    ports:
+      - "8080:3000"
+    depends_on:
+      backend-bateponto:
+        condition: service_healthy
+    networks:
+      - bateponto-network
+
+volumes:
+  mysql_data:
+
+networks:
+  bateponto-network:
+    name: bateponto-network
+    driver: bridge

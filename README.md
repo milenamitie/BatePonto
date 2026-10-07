@@ -1,14 +1,28 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Docker
+## Docker Compose
 
-Com o Docker Desktop instalado e o MySQL acessível na máquina host, defina `DB_PASSWORD` no arquivo `.env` e inicie o site:
+Copie `.env.example` para `.env` e defina senhas fortes para `MYSQL_ROOT_PASSWORD` e `DB_PASSWORD`. Em seguida, inicie os três serviços:
 
 ```bash
-docker compose up --build
+docker compose up --build -d
 ```
 
-Acesse [http://localhost:3000](http://localhost:3000). O Compose inicia apenas o site; o banco `bateponto` e suas tabelas precisam existir no MySQL da máquina host. Para parar o site, execute `docker compose down`.
+Acesse [http://localhost:8080](http://localhost:8080). O Compose inicia o MySQL, a API e a interface na rede privada `bateponto-network`; somente a interface é publicada na máquina hospedeira. O banco é inicializado na primeira execução com as tabelas do sistema e o usuário inicial `rh@instituicao.sp.gov.br` (senha `987654`). Altere essa senha antes de usar o sistema em produção.
+
+Os dados do MySQL ficam no volume `mysql_data`. Os scripts em `database.sql` só são executados quando esse volume é criado pela primeira vez. Para parar os serviços, use `docker compose down`; para apagar também o banco persistido, use `docker compose down -v`.
+
+Para publicar as três imagens no Docker Hub, autentique-se e construa os repositórios definidos no Compose:
+
+```bash
+docker login
+docker build -f database.Dockerfile -t milenamitie/mysql-bateponto:latest .
+docker build -f backend/Dockerfile -t milenamitie/backend-bateponto:latest backend
+docker build -f dockerfile --build-arg API_INTERNAL_URL=http://backend-bateponto:3000 -t milenamitie/frontend-bateponto:latest .
+docker push milenamitie/mysql-bateponto:latest
+docker push milenamitie/backend-bateponto:latest
+docker push milenamitie/frontend-bateponto:latest
+```
 
 ## Getting Started
 
