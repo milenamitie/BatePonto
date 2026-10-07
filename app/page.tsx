@@ -35,7 +35,17 @@ export default function Home() {
         return;
       }
 
-      if (resultado.cargo === "Professor") router.push("/pagina_professor");
+      if (resultado.cargo === "Professor") {
+        if (!resultado.servidorId) {
+          setMostrarErro(true);
+          setVerificando(false);
+          return;
+        }
+
+        localStorage.setItem("servidorId", String(resultado.servidorId));
+        router.push("/pagina_professor");
+      }
+
       if (resultado.cargo === "Gestor") router.push("/pagina_gestao");
       if (resultado.cargo === "RH") router.push("/pagina_rh");
     } catch {
