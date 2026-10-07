@@ -1,5 +1,15 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Docker
+
+Com o Docker Desktop instalado e o MySQL acessível na máquina host, defina `DB_PASSWORD` no arquivo `.env` e inicie o site:
+
+```bash
+docker compose up --build
+```
+
+Acesse [http://localhost:3000](http://localhost:3000). O Compose inicia apenas o site; o banco `bateponto` e suas tabelas precisam existir no MySQL da máquina host. Para parar o site, execute `docker compose down`.
+
 ## Getting Started
 
 First, run the development server:
