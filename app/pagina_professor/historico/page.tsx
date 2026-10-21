@@ -53,7 +53,6 @@ const nomesMeses = [
 export default function HistoricoProfessor() {
   const router = useRouter();
 
-  const [servidorId, setServidorId] = useState<number | null>(null);
   const [servidor, setServidor] = useState<Servidor | null>(null);
   const [registros, setRegistros] = useState<Registro[]>([]);
   const [carregando, setCarregando] = useState(true);
@@ -75,24 +74,18 @@ export default function HistoricoProfessor() {
       return;
     }
 
-    setServidorId(id);
-  }, [router]);
-
-  useEffect(() => {
-    if (!servidorId) return;
-
     async function carregarDados() {
       try {
         const [servidoresResposta, registrosResposta] = await Promise.all([
           fetch("/api/servidores"),
-          fetch(`/api/registros_ponto?servidor_id=${servidorId}`),
+          fetch(`/api/registros_ponto?servidor_id=${id}`),
         ]);
 
         const servidores = await servidoresResposta.json();
         const registrosDados = await registrosResposta.json();
 
         const servidorAtual = servidores.find(
-          (item: Servidor) => item.id === servidorId
+          (item: Servidor) => item.id === id
         );
 
         setServidor(servidorAtual || null);
@@ -105,8 +98,8 @@ export default function HistoricoProfessor() {
       }
     }
 
-    carregarDados();
-  }, [servidorId]);
+    void carregarDados();
+  }, [router]);
 
   const meses = useMemo(() => {
     const grupos = new Map<string, Registro[]>();
@@ -174,10 +167,6 @@ function alternarMes(chave: string) {
   );
 }
 
-function fecharTodos() {
-  setMesesAbertos([]);
-}
-
   function calcularMinutos(
     entrada: string | null,
     saida: string | null
@@ -211,7 +200,7 @@ function fecharTodos() {
   }
 
   function formatarData(data: string) {
-    const [ano, mes, dia] = data.split("-");
+    const [, mes, dia] = data.split("-");
     return `${dia}/${mes}`;
   }
 
