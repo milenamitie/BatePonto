@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Servidor = {
@@ -25,7 +25,7 @@ type Registro = {
 };
 
 export default function PaginaProfessor() {
-  const [servidorId, setServidorId] = useState<number | null>(null);
+  const servidorId = useRef<number | null>(null);
   const [servidor, setServidor] = useState<Servidor | null>(null);
   const [registros, setRegistros] = useState<Registro[]>([]);
   const [carregando, setCarregando] = useState(true);
@@ -80,13 +80,12 @@ export default function PaginaProfessor() {
       return;
     }
 
-    setServidorId(id);
-    carregarDados(id);
+    servidorId.current = id;
+    void Promise.resolve().then(() => carregarDados(id));
   }, [router]);
 
-  const registroHoje = useMemo(() => {
-    return registros.find((registro) => registro.data === dataHoje) || null;
-  }, [registros, dataHoje]);
+  const registroHoje =
+    registros.find((registro) => registro.data === dataHoje) || null;
 
   function formatarData(data: string) {
     const partes = data.split("-");
@@ -127,7 +126,9 @@ export default function PaginaProfessor() {
   }
 
   async function registrarPonto(acao: "entrada" | "saida") {
-    if (!servidorId) {
+    const id = servidorId.current;
+
+    if (!id) {
       setMensagem("Professor não identificado.");
       return;
     }
@@ -142,7 +143,7 @@ export default function PaginaProfessor() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          servidor_id: servidorId,
+          servidor_id: id,
           acao: acao,
         }),
       });
@@ -157,7 +158,7 @@ export default function PaginaProfessor() {
       setMensagem(dados.mensagem);
 
       const registrosResposta = await fetch(
-        `/api/registros_ponto?servidor_id=${servidorId}`
+        `/api/registros_ponto?servidor_id=${id}`
       );
 
       const registrosDados = await registrosResposta.json();
