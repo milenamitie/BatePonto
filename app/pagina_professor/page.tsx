@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Servidor = {
   id: number;
@@ -24,13 +25,13 @@ type Registro = {
 };
 
 export default function PaginaProfessor() {
-  const servidorId = 1;
-
+  const servidorId = useRef<number | null>(null);
   const [servidor, setServidor] = useState<Servidor | null>(null);
   const [registros, setRegistros] = useState<Registro[]>([]);
   const [carregando, setCarregando] = useState(true);
   const [registrando, setRegistrando] = useState(false);
   const [mensagem, setMensagem] = useState("");
+  const router = useRouter();
 
   const hoje = new Date();
   const dataHoje = hoje.toISOString().split("T")[0];
@@ -40,18 +41,18 @@ export default function PaginaProfessor() {
     year: "numeric",
   });
 
-  async function carregarDados() {
+  async function carregarDados(id: number) {
     try {
       const [servidoresResposta, registrosResposta] = await Promise.all([
         fetch("/api/servidores"),
-        fetch(`/api/registros_ponto?servidor_id=${servidorId}`),
+        fetch(`/api/registros_ponto?servidor_id=${id}`),
       ]);
 
       const servidores = await servidoresResposta.json();
       const registrosDados = await registrosResposta.json();
 
       const servidorAtual = servidores.find(
-        (item: Servidor) => item.id === servidorId
+        (item: Servidor) => item.id === id
       );
 
       setServidor(servidorAtual || null);
@@ -64,12 +65,27 @@ export default function PaginaProfessor() {
   }
 
   useEffect(() => {
-    carregarDados();
-  }, []);
+    const idSalvo = localStorage.getItem("servidorId");
 
-  const registroHoje = useMemo(() => {
-    return registros.find((registro) => registro.data === dataHoje) || null;
-  }, [registros, dataHoje]);
+    if (!idSalvo) {
+      router.replace("/");
+      return;
+    }
+
+    const id = Number(idSalvo);
+
+    if (!id) {
+      localStorage.removeItem("servidorId");
+      router.replace("/");
+      return;
+    }
+
+    servidorId.current = id;
+    void Promise.resolve().then(() => carregarDados(id));
+  }, [router]);
+
+  const registroHoje =
+    registros.find((registro) => registro.data === dataHoje) || null;
 
   function formatarData(data: string) {
     const partes = data.split("-");
@@ -110,6 +126,13 @@ export default function PaginaProfessor() {
   }
 
   async function registrarPonto(acao: "entrada" | "saida") {
+    const id = servidorId.current;
+
+    if (!id) {
+      setMensagem("Professor não identificado.");
+      return;
+    }
+
     setRegistrando(true);
     setMensagem("");
 
@@ -120,7 +143,7 @@ export default function PaginaProfessor() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          servidor_id: 1,
+          servidor_id: id,
           acao: acao,
         }),
       });
@@ -135,13 +158,13 @@ export default function PaginaProfessor() {
       setMensagem(dados.mensagem);
 
       const registrosResposta = await fetch(
-        "/api/registros_ponto?servidor_id=1"
+        `/api/registros_ponto?servidor_id=${id}`
       );
 
       const registrosDados = await registrosResposta.json();
 
       setRegistros(registrosDados);
-    } catch (erro) {
+    } catch {
       setMensagem("Erro ao registrar ponto.");
     } finally {
       setRegistrando(false);
@@ -184,7 +207,9 @@ export default function PaginaProfessor() {
           <a className="ativo" href="/pagina_professor">
             Folha de Ponto
           </a>
-          <a href="#">Histórico</a>
+          <a href="/pagina_professor/historico">
+            Histórico
+          </a>
           <a href="#">Justificativas & Compensações</a>
           <a href="#">Notificações</a>
           <a href="#">Gerar PDF</a>
@@ -198,7 +223,14 @@ export default function PaginaProfessor() {
             <span>Professor</span>
           </div>
 
-          <button>SAIR</button>
+          <button
+            onClick={() => {
+              localStorage.removeItem("servidorId");
+              router.push("/");
+            }}
+          >
+            SAIR
+          </button>
         </div>
       </header>
 
@@ -350,8 +382,8 @@ export default function PaginaProfessor() {
 
               return (
                 <div
-                  className={`tabelaLinha ${ehHoje ? "linhaHoje" : ""
-                    } ${status === "Ausência" ? "linhaAusencia" : ""}`}
+                  className={`tabelaLinha ${ehHoje ? "linhaHoje" : ""} ${status === "Ausência" ? "linhaAusencia" : ""
+                    }`}
                   key={registro.id}
                 >
                   <div className="celulaData">
@@ -360,9 +392,7 @@ export default function PaginaProfessor() {
                     {ehHoje && <small>HOJE</small>}
                   </div>
 
-                  <div>
-                    {registro.horario_previsto || "—"}
-                  </div>
+                  <div>{registro.horario_previsto || "—"}</div>
 
                   <div>
                     {registro.entrada || "—"}

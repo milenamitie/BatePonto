@@ -24,7 +24,11 @@ export default function Home() {
       const resposta = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, senha, cargo: cargoSelecionado })
+        body: JSON.stringify({
+          email,
+          senha,
+          cargo: cargoSelecionado
+        })
       });
 
       const resultado = await resposta.json();
@@ -42,12 +46,28 @@ export default function Home() {
           return;
         }
 
+        localStorage.removeItem("cargoUsuario");
         localStorage.setItem("servidorId", String(resultado.servidorId));
         router.push("/pagina_professor");
+        return;
       }
 
-      if (resultado.cargo === "Gestor") router.push("/pagina_gestao");
-      if (resultado.cargo === "RH") router.push("/pagina_rh");
+      if (resultado.cargo === "RH") {
+        localStorage.removeItem("servidorId");
+        localStorage.setItem("cargoUsuario", "RH");
+        router.push("/pagina_rh");
+        return;
+      }
+
+      if (resultado.cargo === "Gestor") {
+        localStorage.removeItem("servidorId");
+        localStorage.setItem("cargoUsuario", "Gestor");
+        router.push("/pagina_gestao");
+        return;
+      }
+
+      setMostrarErro(true);
+      setVerificando(false);
     } catch {
       setMostrarErro(true);
       setVerificando(false);
@@ -56,7 +76,6 @@ export default function Home() {
 
   return (
     <main className="pagina">
-
       <header className="cabecalho">
         <div className="logo">
           BP
@@ -68,9 +87,7 @@ export default function Home() {
         </div>
       </header>
 
-
       <section className="login">
-
         <p className="identificacao">
           IDENTIFICAÇÃO
         </p>
@@ -81,9 +98,7 @@ export default function Home() {
           Selecione seu cargo e insira suas credenciais.
         </p>
 
-
         <div className="cargos">
-
           <button
             className={cargoSelecionado === "Professor" ? "cargo selecionado" : "cargo"}
             onClick={() => setCargoSelecionado("Professor")}
@@ -110,9 +125,7 @@ export default function Home() {
             <strong>Recursos Humanos</strong>
             <span>Setor de Gestão de Pessoas</span>
           </button>
-
         </div>
-
 
         <label>
           E-MAIL
@@ -124,7 +137,6 @@ export default function Home() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-
 
         <label>
           SENHA
@@ -151,19 +163,15 @@ export default function Home() {
           {verificando ? "VERIFICANDO..." : "ACESSAR SISTEMA"}
         </button>
 
-
         <p className="esqueci">
           Esqueceu a senha?
           <a href="/esqueci_senha"> Clique aqui</a>
         </p>
-
       </section>
-
 
       <footer>
         © 2026 • BatePonto • Uso institucional
       </footer>
-
     </main>
   );
 }
