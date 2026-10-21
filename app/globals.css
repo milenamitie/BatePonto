@@ -1040,6 +1040,11 @@ footer {
 .regrasBox {
   background: #fff;
   border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.035);
+}
+
+.regrasTabelaScroll {
+  overflow-x: auto;
 }
 
 .filtrosRegras {
@@ -1056,23 +1061,30 @@ footer {
 .regrasCabecalho {
   min-height: 40px;
   display: grid;
-  grid-template-columns: 90px 1fr 220px 230px;
+  grid-template-columns: 70px minmax(260px, 1.7fr) minmax(150px, 1fr) 110px 100px;
   align-items: center;
   padding: 0 20px;
   border-bottom: 1px solid #ddd;
   color: #888;
   font-size: 11px;
   letter-spacing: 0.5px;
+  min-width: 760px;
 }
 
 .regraLinha {
   min-height: 57px;
   display: grid;
-  grid-template-columns: 90px 1fr 220px 230px;
+  grid-template-columns: 70px minmax(260px, 1.7fr) minmax(150px, 1fr) 110px 100px;
   align-items: center;
   padding: 0 20px;
   border-bottom: 1px solid #eee;
   font-size: 14px;
+  min-width: 760px;
+  transition: background-color 0.15s ease;
+}
+
+.regraLinha:hover {
+  background: #fcfcfc;
 }
 
 .regraLinha:last-child {
@@ -1090,20 +1102,10 @@ footer {
   font-weight: 700;
 }
 
-.valorRegra input {
-  width: 160px;
-  height: 32px;
-  border: 2px solid #e00000;
-  padding: 0 12px;
-  font-family: monospace;
-  font-size: 14px;
-  outline: none;
-}
-
-.regraAcao {
+.regraEditabilidade,
+.regraAcoes {
   display: flex;
   align-items: center;
-  gap: 90px;
 }
 
 .editavelSim,
@@ -1163,7 +1165,14 @@ footer {
 .cancelarRegra {
   background: #fff;
   border: 1px solid #ddd;
-  color: #aaa;
+  color: #777;
+}
+
+.salvarRegra:disabled,
+.cancelarRegra:disabled,
+.editarRegra:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .regraCarregando {
@@ -1180,6 +1189,107 @@ footer {
   background: #fffdf0;
   color: #d99a00;
   font-size: 12px;
+}
+
+.modalRegraFundo {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(20, 20, 20, 0.45);
+}
+
+.modalRegra {
+  width: min(100%, 440px);
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+}
+
+.modalRegraCabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.modalRegraCabecalho h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.modalRegraCabecalho p {
+  margin: 6px 0 0;
+  color: #777;
+  font-size: 13px;
+}
+
+.modalRegraFechar {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #777;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.modalRegra > label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.modalRegraCampo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modalRegraCampo input {
+  width: 100%;
+  min-width: 0;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid #ccc;
+  color: #222;
+  font: 14px monospace;
+}
+
+.modalRegraCampo input:focus {
+  outline: 2px solid rgba(214, 0, 0, 0.2);
+  border-color: #d60000;
+}
+
+.modalRegraCampo span {
+  flex: 0 0 auto;
+  color: #777;
+  font-size: 13px;
+}
+
+.modalRegra .erroRh {
+  margin-top: 14px;
+}
+
+.modalRegraAcoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.modalRegraAcoes .salvarRegra,
+.modalRegraAcoes .cancelarRegra {
+  min-height: 36px;
+  padding: 0 14px;
 }
 
 .folhaPagina {

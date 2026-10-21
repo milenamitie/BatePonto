@@ -57,5 +57,25 @@ CREATE TABLE IF NOT EXISTS regras_ponto (
 	editavel BOOLEAN NOT NULL DEFAULT TRUE
 );
 
+INSERT INTO regras_ponto (tipo, nome, valor, unidade, editavel)
+SELECT regra.tipo, regra.nome, regra.valor, regra.unidade, regra.editavel
+FROM (
+	SELECT 'tempo' AS tipo, 'Tolerância de entrada' AS nome, '15' AS valor, 'minutos' AS unidade, TRUE AS editavel
+	UNION ALL SELECT 'tempo', 'Tolerância de saída', '10', 'minutos', TRUE
+	UNION ALL SELECT 'tempo', 'Intervalo mínimo de almoço', '60', 'minutos', TRUE
+	UNION ALL SELECT 'tempo', 'Intervalo máximo de almoço', '90', 'minutos', TRUE
+	UNION ALL SELECT 'carga', 'Carga horária — regime 40h', '176', 'h/mês', FALSE
+	UNION ALL SELECT 'carga', 'Carga horária — regime 20h', '88', 'h/mês', FALSE
+	UNION ALL SELECT 'limite', 'Banco de horas máximo', '40', 'horas', TRUE
+	UNION ALL SELECT 'prazo', 'Prazo para justificativa', '5', 'dias corridos', TRUE
+	UNION ALL SELECT 'prazo', 'Prazo para compensação', '30', 'dias corridos', TRUE
+	UNION ALL SELECT 'booleano', 'Biometria obrigatória', 'Sim', '', TRUE
+) AS regra
+WHERE NOT EXISTS (
+	SELECT 1
+	FROM regras_ponto AS existente
+	WHERE existente.nome = regra.nome
+);
+
 INSERT IGNORE INTO usuarios (email, senha, cargo)
 VALUES ('rh@instituicao.sp.gov.br', '987654', 'RH');
