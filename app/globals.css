@@ -470,6 +470,21 @@ footer {
   margin-left: 10px
 }
 
+.rhUsuario button {
+  border: 1px solid #ddd;
+  padding: 8px 13px;
+  color: #777;
+  background: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.rhUsuario button:hover {
+  color: #d90000;
+  border-color: #d90000;
+}
+
 .rhNav {
   height: 48px;
   background: #fff;

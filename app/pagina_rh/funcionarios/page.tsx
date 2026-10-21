@@ -219,15 +219,15 @@ export default function Funcionarios() {
         <a href="/pagina_rh">
           Painel
         </a>
-
-        <a
-          className="ativo"
-          href="/pagina_rh/funcionarios"
-        >
+        <a href="/pagina_rh/funcionarios">
           Funcionários
         </a>
-
-        <span>Regras de Ponto</span>
+        <a href="/pagina_rh/grades">
+          Grades
+        </a>
+        <a href="/pagina_rh/regras_ponto">
+          Regras de Ponto
+        </a>
         <span>Fechamento Mensal</span>
         <span>Relatórios</span>
         <span>Gerar PDF</span>

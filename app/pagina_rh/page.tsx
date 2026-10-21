@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Servidor = {
   id: number;
@@ -17,11 +18,19 @@ type Servidor = {
 };
 
 export default function SistemaRH() {
+  const router = useRouter();
   const [servidores, setServidores] = useState<Servidor[]>([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState("");
 
   useEffect(() => {
+    const cargoUsuario = localStorage.getItem("cargoUsuario");
+
+    if (cargoUsuario !== "RH") {
+      router.replace("/");
+      return;
+    }
+
     async function carregar() {
       try {
         const resposta = await fetch("/api/servidores");
@@ -44,7 +53,12 @@ export default function SistemaRH() {
     }
 
     carregar();
-  }, []);
+  }, [router]);
+
+  const sair = () => {
+    localStorage.removeItem("cargoUsuario");
+    router.replace("/");
+  };
 
   const total = servidores.length;
 
@@ -82,23 +96,23 @@ export default function SistemaRH() {
         <div className="rhUsuario">
           <strong>Recursos Humanos</strong>
           <small>Gestão de Pessoas</small>
-          <Link href="/">SAIR</Link>
+          <button onClick={sair}>SAIR</button>
         </div>
       </header>
 
       <nav className="rhNav">
-        <Link className="ativo" href="/pagina_rh">
+        <Link href="/pagina_rh">
           Painel
         </Link>
-
         <Link href="/pagina_rh/funcionarios">
           Funcionários
         </Link>
-
+        <Link href="/pagina_rh/grades">
+          Grades
+        </Link>
         <Link href="/pagina_rh/regras_ponto">
           Regras de Ponto
         </Link>
-
         <span>Fechamento Mensal</span>
         <span>Relatórios</span>
         <span>Gerar PDF</span>
@@ -166,7 +180,7 @@ export default function SistemaRH() {
                     <div className="barra">
                       <i
                         style={{
-                          width: `${percentual}%`,
+                          width: `${percentual}%`
                         }}
                       />
                     </div>
