@@ -1653,7 +1653,17 @@ footer {
   }
 
   .folhaUsuario {
+    display: flex;
+    padding-left: 8px;
+  }
+
+  .folhaAvatar,
+  .folhaUsuario div:nth-child(2) {
     display: none;
+  }
+
+  .folhaUsuario button {
+    padding: 0 10px;
   }
 
   .folhaConteudo {
