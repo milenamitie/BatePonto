@@ -1,20 +1,59 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
-function obterDiaSemana(data: Date) {
-  const dia = data.getDay();
+function obterDataHoraSaoPaulo() {
+  const agora = new Date();
 
-  const dias: Record<number, string> = {
-    0: "Domingo",
-    1: "Segunda",
-    2: "Terça",
-    3: "Quarta",
-    4: "Quinta",
-    5: "Sexta",
-    6: "Sábado",
+  const partes = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Sao_Paulo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(agora);
+
+  const valores: { [chave: string]: string } = {};
+
+  partes.forEach((parte) => {
+    if (parte.type !== "literal") {
+      valores[parte.type] = parte.value;
+    }
+  });
+
+  const data = `${valores.year}-${valores.month}-${valores.day}`;
+  const horario = `${valores.hour}:${valores.minute}:${valores.second}`;
+
+  const diaFormatado = new Intl.DateTimeFormat("pt-BR", {
+    timeZone: "America/Sao_Paulo",
+    weekday: "long",
+  }).format(agora);
+
+  let diaSemana = diaFormatado;
+
+  if (diaFormatado === "domingo") {
+    diaSemana = "Domingo";
+  } else if (diaFormatado === "segunda-feira") {
+    diaSemana = "Segunda";
+  } else if (diaFormatado === "terça-feira") {
+    diaSemana = "Terça";
+  } else if (diaFormatado === "quarta-feira") {
+    diaSemana = "Quarta";
+  } else if (diaFormatado === "quinta-feira") {
+    diaSemana = "Quinta";
+  } else if (diaFormatado === "sexta-feira") {
+    diaSemana = "Sexta";
+  } else if (diaFormatado === "sábado") {
+    diaSemana = "Sábado";
+  }
+
+  return {
+    data,
+    horario,
+    diaSemana,
   };
-
-  return dias[dia];
 }
 
 function calcularAtraso(horarioReal: string, horarioPrevisto: string) {
@@ -27,6 +66,16 @@ function calcularAtraso(horarioReal: string, horarioPrevisto: string) {
   const minutosPrevistos = horaPrevista * 60 + minutoPrevisto;
 
   return Math.max(0, minutosReal - minutosPrevistos);
+}
+
+function diferencaMinutos(horarioA: string, horarioB: string) {
+  const [horaA, minutoA] = horarioA.split(":").map(Number);
+  const [horaB, minutoB] = horarioB.split(":").map(Number);
+
+  const minutosA = horaA * 60 + minutoA;
+  const minutosB = horaB * 60 + minutoB;
+
+  return Math.abs(minutosA - minutosB);
 }
 
 export async function GET(request: NextRequest) {
@@ -76,66 +125,71 @@ export async function GET(request: NextRequest) {
   }
 }
 
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-
     const { servidor_id, acao } = body;
 
-    if (!servidor_id || !acao) {
+    if (!servidor_id || !["entrada", "saida"].includes(acao)) {
       return NextResponse.json(
         { erro: "Servidor e ação são obrigatórios." },
         { status: 400 }
       );
     }
 
-    const [registros] = await db.query(
+    const { data, horario, diaSemana } = obterDataHoraSaoPaulo();
+
+    const [abertos] = await db.query(
       `
-      SELECT *
-      FROM registros_ponto
-      WHERE servidor_id = ?
-        AND data = CURDATE()
-      LIMIT 1
+        SELECT *
+        FROM registros_ponto
+        WHERE servidor_id = ?
+          AND data = ?
+          AND saida IS NULL
+        ORDER BY id DESC
+        LIMIT 1
       `,
-      [servidor_id]
+      [servidor_id, data]
     );
 
-    const registro = (registros as any[])[0];
+    const registroAberto = (abertos as any[])[0];
 
     if (acao === "entrada") {
-      if (registro) {
+      if (registroAberto) {
         return NextResponse.json(
-          { erro: "A entrada de hoje já foi registrada." },
+          { erro: "Registre a saída antes de iniciar outro período." },
           { status: 400 }
         );
       }
 
       const [gradeRows] = await db.query(
         `
-        SELECT
-          hora_inicio
-        FROM grades_aulas
-        WHERE servidor_id = ?
-          AND dia_semana = ?
-          AND status = 'Ativo'
-        ORDER BY hora_inicio
-        LIMIT 1
+          SELECT hora_inicio
+          FROM grades_aulas
+          WHERE servidor_id = ?
+            AND dia_semana = ?
+            AND status = 'Ativo'
         `,
-        [servidor_id, obterDiaSemana(new Date())]
+        [servidor_id, diaSemana]
       );
 
-      const grade = (gradeRows as any[])[0];
+      const gradesDoDia = gradeRows as any[];
 
-      const horarioPrevisto = grade?.hora_inicio
-        ? String(grade.hora_inicio).substring(0, 8)
-        : null;
+      const grade = gradesDoDia
+        .map((item) => ({
+          horario: String(item.hora_inicio).substring(0, 8),
+        }))
+        .sort(
+          (a, b) =>
+            diferencaMinutos(horario, a.horario) -
+            diferencaMinutos(horario, b.horario)
+        )[0];
 
-      const horarioAtual = new Date()
-        .toTimeString()
-        .slice(0, 8);
+      const horarioPrevisto = grade?.horario || null;
 
       const atraso = horarioPrevisto
-        ? calcularAtraso(horarioAtual, horarioPrevisto)
+        ? calcularAtraso(horario, horarioPrevisto)
         : 0;
 
       const status = horarioPrevisto
@@ -146,7 +200,7 @@ export async function POST(request: NextRequest) {
 
       const [resultado] = await db.query(
         `
-        INSERT INTO registros_ponto
+          INSERT INTO registros_ponto
           (
             servidor_id,
             data,
@@ -155,11 +209,12 @@ export async function POST(request: NextRequest) {
             atraso_minutos,
             status
           )
-        VALUES
-          (?, CURDATE(), CURTIME(), ?, ?, ?)
+          VALUES (?, ?, ?, ?, ?, ?)
         `,
         [
           servidor_id,
+          data,
+          horario,
           horarioPrevisto,
           atraso,
           status,
@@ -179,28 +234,20 @@ export async function POST(request: NextRequest) {
     }
 
     if (acao === "saida") {
-      if (!registro) {
+      if (!registroAberto) {
         return NextResponse.json(
-          { erro: "Nenhuma entrada foi registrada hoje." },
-          { status: 400 }
-        );
-      }
-
-      if (registro.saida) {
-        return NextResponse.json(
-          { erro: "A saída de hoje já foi registrada." },
+          { erro: "Registre uma entrada antes de registrar a saída." },
           { status: 400 }
         );
       }
 
       await db.query(
         `
-        UPDATE registros_ponto
-        SET
-          saida = CURTIME()
-        WHERE id = ?
+          UPDATE registros_ponto
+          SET saida = ?
+          WHERE id = ?
         `,
-        [registro.id]
+        [horario, registroAberto.id]
       );
 
       return NextResponse.json({
@@ -212,7 +259,10 @@ export async function POST(request: NextRequest) {
       { erro: "Ação inválida." },
       { status: 400 }
     );
-  } catch {
+
+  } catch (error) {
+    console.error("Erro ao registrar ponto:", error);
+
     return NextResponse.json(
       { erro: "Erro ao registrar ponto." },
       { status: 500 }

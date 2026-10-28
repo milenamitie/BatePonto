@@ -32,9 +32,14 @@ export default function PaginaProfessor() {
   const [registrando, setRegistrando] = useState(false);
   const [mensagem, setMensagem] = useState("");
   const router = useRouter();
-
   const hoje = new Date();
-  const dataHoje = hoje.toISOString().split("T")[0];
+
+  const dataHoje = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Sao_Paulo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(hoje);
 
   const mesAno = hoje.toLocaleDateString("pt-BR", {
     month: "long",
@@ -84,9 +89,17 @@ export default function PaginaProfessor() {
     carregarDados(id);
   }, [router]);
 
-  const registroHoje = useMemo(() => {
-    return registros.find((registro) => registro.data === dataHoje) || null;
+
+  const registrosHoje = useMemo(() => {
+    return registros.filter((registro) => registro.data === dataHoje);
   }, [registros, dataHoje]);
+
+  const registroAberto = useMemo(() => {
+    return registrosHoje.find((registro) => registro.entrada && !registro.saida) || null;
+  }, [registrosHoje]);
+
+  const ultimoRegistroHoje = registrosHoje[0] || null;
+
 
   function formatarData(data: string) {
     const partes = data.split("-");
@@ -206,6 +219,9 @@ export default function PaginaProfessor() {
           <a className="ativo" href="/pagina_professor">
             Folha de Ponto
           </a>
+          <a href="/pagina_professor/grade">
+            Grade de Aulas
+          </a>
           <a href="/pagina_professor/historico">
             Histórico
           </a>
@@ -276,50 +292,51 @@ export default function PaginaProfessor() {
               })}
             </h2>
 
-            {registroHoje ? (
+            {ultimoRegistroHoje ? (
               <p>
-                Entrada: <strong>{registroHoje.entrada || "--:--"}</strong>
-                {"   "}
-                Saída: <strong>{registroHoje.saida || "--:--"}</strong>
+                Último período: Entrada{" "}
+                <strong>{ultimoRegistroHoje.entrada || "--:--"}</strong>
+                {" · "}
+                Saída{" "}
+                <strong>{ultimoRegistroHoje.saida || "--:--"}</strong>
               </p>
             ) : (
               <p>Nenhum ponto registrado hoje</p>
             )}
+
           </div>
+
 
           <div className="folhaPontoBotoes">
             <button
               className={
-                registroHoje?.entrada
+                registroAberto || registrando
                   ? "folhaBotaoRegistrado"
                   : "folhaBotaoEntrada"
               }
-              disabled={!!registroHoje?.entrada || registrando}
+              disabled={!!registroAberto || registrando}
               onClick={() => registrarPonto("entrada")}
             >
-              {registroHoje?.entrada
+              {registroAberto
                 ? "ENTRADA REGISTRADA"
                 : "REGISTRAR ENTRADA"}
             </button>
 
             <button
               className={
-                registroHoje?.saida
+                !registroAberto || registrando
                   ? "folhaBotaoRegistrado"
                   : "folhaBotaoSaida"
               }
-              disabled={
-                !registroHoje?.entrada ||
-                !!registroHoje?.saida ||
-                registrando
-              }
+              disabled={!registroAberto || registrando}
               onClick={() => registrarPonto("saida")}
             >
-              {registroHoje?.saida
-                ? "SAÍDA REGISTRADA"
+              {!registroAberto
+                ? "REGISTRAR SAÍDA"
                 : "REGISTRAR SAÍDA"}
             </button>
           </div>
+
 
           {mensagem && (
             <div className="folhaPontoMensagem">
