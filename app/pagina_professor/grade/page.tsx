@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import ProfessorNav from "@/app/components/ProfessorNav";
 
 type Grade = {
   id: number;
@@ -148,45 +149,7 @@ export default function GradeProfessor() {
 
   return (
     <main className="folhaPagina">
-      <header className="folhaHeader">
-        <div className="folhaLogoArea">
-          <div className="folhaLogo">BP</div>
-          <strong>BatePonto</strong>
-        </div>
-
-        <nav className="folhaNav">
-          <a href="/pagina_professor">
-            Folha de Ponto
-          </a>
-          <a className="ativo" href="/pagina_professor/grade">
-            Grade de Aulas
-          </a>
-          <a href="/pagina_professor/historico">
-            Histórico
-          </a>
-          <a href="#">Justificativas & Compensações</a>
-          <a href="#">Notificações</a>
-          <a href="#">Gerar PDF</a>
-        </nav>
-
-        <div className="folhaUsuario">
-          <div className="folhaAvatar">PF</div>
-
-          <div>
-            <strong>Professor</strong>
-            <span>Professor</span>
-          </div>
-
-          <button
-            onClick={() => {
-              localStorage.removeItem("servidorId");
-              router.push("/");
-            }}
-          >
-            SAIR
-          </button>
-        </div>
-      </header>
+      <ProfessorNav paginaAtiva="grade" nomeProfessor={nomeProfessor} />
 
       <div className="folhaBreadcrumb">
         <span>Sistema</span>

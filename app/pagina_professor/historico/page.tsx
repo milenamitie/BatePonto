@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import ProfessorNav from "@/app/components/ProfessorNav";
 
 type Servidor = {
   id: number;
@@ -269,11 +270,6 @@ export default function HistoricoProfessor() {
       }`.toUpperCase();
   }
 
-  function sair() {
-    localStorage.removeItem("servidorId");
-    router.push("/");
-  }
-
   function abrirFolhaCompleta(chave: string) {
     router.push(`/pagina_professor?mes=${chave}`);
   }
@@ -331,43 +327,7 @@ export default function HistoricoProfessor() {
 
   return (
     <main className="historicoPagina">
-      <header className="folhaHeader">
-        <div className="folhaLogoArea">
-          <div className="folhaLogo">BP</div>
-          <strong>BatePonto</strong>
-        </div>
-
-        <nav className="folhaNav">
-          <a href="/pagina_professor">
-            Folha de Ponto
-          </a>
-          <a href="/pagina_professor/grade">
-            Grade de Aulas
-          </a>
-          <a className="ativo" href="/pagina_professor/historico">
-            Histórico
-          </a>
-          <a href="#">Justificativas & Compensações</a>
-          <a href="#">Notificações</a>
-          <a href="#">Gerar PDF</a>
-        </nav>
-
-        <div className="folhaUsuario">
-          <div className="folhaAvatar">
-            {iniciais(servidor?.nome_completo || "Professor")}
-          </div>
-
-          <div>
-            <strong>
-              {servidor?.nome_completo || "Professor"}
-            </strong>
-
-            <span>Professor</span>
-          </div>
-
-          <button onClick={sair}>SAIR</button>
-        </div>
-      </header>
+      <ProfessorNav paginaAtiva="historico" nomeProfessor={servidor?.nome_completo || "Professor"} />
 
       <div className="folhaBreadcrumb">
         <span>Sistema</span>

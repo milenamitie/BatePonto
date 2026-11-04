@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import MenuRH from "../components/MenuRH";
 
 type Servidor = {
   id: number;
@@ -55,11 +56,6 @@ export default function SistemaRH() {
     carregar();
   }, [router]);
 
-  const sair = () => {
-    localStorage.removeItem("cargoUsuario");
-    router.replace("/");
-  };
-
   const total = servidores.length;
 
   const ativos = servidores.filter(
@@ -85,38 +81,7 @@ export default function SistemaRH() {
 
   return (
     <main className="rhPagina">
-      <header className="rhCabecalho">
-        <div className="rhMarca">
-          <div className="rhLogo">BP</div>
-          <strong>BatePonto</strong>
-          <span>•</span>
-          <b>RECURSOS HUMANOS</b>
-        </div>
-
-        <div className="rhUsuario">
-          <strong>Recursos Humanos</strong>
-          <small>Gestão de Pessoas</small>
-          <button onClick={sair}>SAIR</button>
-        </div>
-      </header>
-
-      <nav className="rhNav">
-        <Link className="ativo" href="/pagina_rh">
-          Painel
-        </Link>
-        <Link href="/pagina_rh/funcionarios">
-          Funcionários
-        </Link>
-        <Link href="/pagina_rh/grades">
-          Grades
-        </Link>
-        <Link href="/pagina_rh/regras_ponto">
-          Regras de Ponto
-        </Link>
-        <span>Fechamento Mensal</span>
-        <span>Relatórios</span>
-        <span>Gerar PDF</span>
-      </nav>
+      <MenuRH />
 
       <div className="rhConteudo">
         <div className="breadcrumb">

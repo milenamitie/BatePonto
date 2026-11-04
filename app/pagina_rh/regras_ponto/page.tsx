@@ -1,6 +1,6 @@
 "use client";
+import MenuRH from "../../components/MenuRH";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 type Regra = {
@@ -131,38 +131,7 @@ export default function RegrasDePonto() {
 
   return (
     <main className="rhPagina">
-      <header className="rhCabecalho">
-        <div className="rhMarca">
-          <div className="rhLogo">BP</div>
-          <strong>BatePonto</strong>
-          <span>•</span>
-          <b>RECURSOS HUMANOS</b>
-        </div>
-
-        <div className="rhUsuario">
-          <strong>Recursos Humanos</strong>
-          <small>Gestão de Pessoas</small>
-          <Link href="/">SAIR</Link>
-        </div>
-      </header>
-
-      <nav className="rhNav">
-        <Link href="/pagina_rh">
-          Painel
-        </Link>
-        <Link href="/pagina_rh/funcionarios">
-          Funcionários
-        </Link>
-        <Link href="/pagina_rh/grades">
-          Grades
-        </Link>
-        <Link className="ativo" href="/pagina_rh/regras_ponto">
-          Regras de Ponto
-        </Link>
-        <span>Fechamento Mensal</span>
-        <span>Relatórios</span>
-        <span>Gerar PDF</span>
-      </nav>
+      <MenuRH />
 
       <div className="rhConteudo regrasTela">
         <div className="breadcrumb">

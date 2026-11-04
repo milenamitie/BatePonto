@@ -1,4 +1,5 @@
 "use client";
+import MenuRH from "../../components/MenuRH";
 
 import { FormEvent, ReactNode, useEffect, useState } from "react";
 
@@ -197,41 +198,7 @@ export default function Funcionarios() {
   return (
     <main className="rhPagina">
 
-      <header className="rhCabecalho">
-        <div className="rhMarca">
-          <div className="rhLogo">BP</div>
-
-          <strong>BatePonto</strong>
-
-          <span>•</span>
-
-          <b>RECURSOS HUMANOS</b>
-        </div>
-
-        <div className="rhUsuario">
-          <strong>Recursos Humanos</strong>
-          <small>Gestão de Pessoas</small>
-          <a href="/">SAIR</a>
-        </div>
-      </header>
-
-      <nav className="rhNav">
-        <a href="/pagina_rh">
-          Painel
-        </a>
-        <a className="ativo" href="/pagina_rh/funcionarios">
-          Funcionários
-        </a>
-        <a href="/pagina_rh/grades">
-          Grades
-        </a>
-        <a href="/pagina_rh/regras_ponto">
-          Regras de Ponto
-        </a>
-        <span>Fechamento Mensal</span>
-        <span>Relatórios</span>
-        <span>Gerar PDF</span>
-      </nav>
+      <MenuRH />
 
       <div className="rhConteudo funcionariosTela">
 

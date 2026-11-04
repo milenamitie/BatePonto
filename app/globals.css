@@ -1198,6 +1198,7 @@ footer {
   align-items: center;
   padding: 0 29px;
   gap: 34px;
+  position: relative;
 }
 
 .folhaLogoArea {
@@ -1652,9 +1653,6 @@ footer {
     font-size: 11px;
   }
 
-  .folhaUsuario {
-    display: none;
-  }
 
   .folhaConteudo {
     padding: 20px 15px;
@@ -1676,9 +1674,64 @@ footer {
   }
 }
 
+.folhaMenuBotao {
+  display: none;
+}
+
 @media (max-width: 700px) {
+  .folhaHeader {
+    gap: 12px;
+    padding: 0 15px;
+  }
+
+  .folhaMenuBotao {
+    display: block;
+    margin-left: auto;
+    border: 0;
+    background: transparent;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    color: #111;
+    padding: 5px;
+  }
+
   .folhaNav {
     display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+    flex: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    z-index: 100;
+  }
+
+  .folhaNav.menuAberto {
+    display: flex;
+  }
+
+  .folhaNav a {
+    width: 100%;
+    height: auto;
+    min-height: 45px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid #eee;
+    font-size: 12px;
+  }
+
+  .folhaNav a.ativo {
+    border-bottom: 1px solid #eee;
   }
 
   .folhaPontoDia {
@@ -2731,4 +2784,401 @@ footer {
   .profGradeSemestre {
     width: 100%;
   }
+}
+@media (max-width: 1000px) {
+  .rhCabecalho {
+    padding: 0 20px;
+  }
+
+  .rhNav {
+    gap: 22px;
+    padding: 0 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .rhConteudo {
+    padding: 0 20px 40px;
+  }
+
+  .cardsRh {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rhPainelGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .rhCabecalho {
+    min-height: 60px;
+    height: auto;
+    padding: 12px 15px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .rhMarca {
+    gap: 8px;
+    min-width: 0;
+    flex-wrap: wrap;
+  }
+
+  .rhMarca strong {
+    font-size: 13px;
+  }
+
+  .rhMarca b {
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+
+  .rhUsuario {
+    gap: 6px;
+    font-size: 11px;
+    flex-wrap: wrap;
+  }
+
+  .rhUsuario button,
+  .rhUsuario a {
+    margin-left: 0;
+    padding: 7px 10px;
+  }
+
+  .rhNav {
+    height: auto;
+    min-height: 46px;
+    padding: 0 15px;
+    gap: 22px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .rhNav a {
+    flex: 0 0 auto;
+    padding: 16px 0;
+  }
+
+  .rhConteudo {
+    padding: 0 15px 30px;
+  }
+
+  .breadcrumb {
+    min-height: 42px;
+    height: auto;
+    flex-wrap: wrap;
+    line-height: 1.5;
+    padding: 8px 0;
+  }
+
+  .rhConteudo h1 {
+    font-size: 25px;
+    line-height: 1.2;
+    margin: 16px 0;
+  }
+
+  .cardsRh {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .cardsRh > div {
+    min-height: 88px;
+    height: auto;
+  }
+
+  .rhPainelGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 18px;
+  }
+
+  .rhBox {
+    min-width: 0;
+    padding: 17px;
+  }
+
+  .rhBox h2 {
+    line-height: 1.35;
+  }
+
+  .rhBox h2 small {
+    float: none;
+    display: block;
+    margin-top: 5px;
+  }
+
+  .busca {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .busca input {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .tabelaWrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tabelaWrap table {
+    min-width: 680px;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .funcionariosTela .tituloLinha,
+  .regrasTela .regrasCabecalho,
+  .regrasTela .filtrosRegras {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .funcionariosTela .acoes,
+  .funcionariosTela .botoes,
+  .regrasTela .botoesRegra {
+    flex-wrap: wrap;
+  }
+
+  .regrasTela .regraLinha {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .regrasTela .regraAcao {
+    justify-content: flex-start;
+  }
+
+  .modal {
+    width: calc(100% - 24px);
+    max-width: 520px;
+    max-height: calc(100vh - 24px);
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 420px) {
+  .rhMarca span {
+    display: none;
+  }
+
+  .rhMarca b {
+    max-width: 130px;
+  }
+
+  .rhUsuario small {
+    display: none;
+  }
+
+  .rhConteudo h1 {
+    font-size: 22px;
+  }
+
+  .rhBox {
+    padding: 14px;
+  }
+}
+
+
+.rhMenuBotao {
+  display: none;
+  width: 42px;
+  height: 38px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #d90000;
+  font-size: 25px;
+  line-height: 1;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rhNav a {
+  display: inline-flex;
+  align-items: center;
+}
+
+@media (max-width: 760px) {
+  .rhCabecalho {
+    position: relative;
+    z-index: 31;
+    min-height: 60px;
+    height: auto;
+    padding: 10px 16px;
+    gap: 12px;
+  }
+
+  .rhMarca {
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .rhMarca strong {
+    font-size: 14px;
+  }
+
+  .rhMarca b {
+    display: none;
+  }
+
+  .rhMenuBotao {
+    display: inline-flex;
+    margin-left: auto;
+  }
+
+  .rhUsuario {
+    gap: 6px;
+    margin-left: 0;
+  }
+
+  .rhUsuario strong,
+  .rhUsuario small {
+    display: none;
+  }
+
+  .rhUsuario button,
+  .rhUsuario a {
+    margin-left: 0;
+    padding: 8px 10px;
+    font-size: 10px;
+  }
+
+  .rhNav {
+    display: none;
+    position: absolute;
+    z-index: 30;
+    top: 64px;
+    left: 0;
+    right: 0;
+    height: auto;
+    min-height: 0;
+    padding: 10px 16px 16px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    overflow: visible;
+    white-space: normal;
+  }
+
+  .rhNav.rhMenuAberto {
+    display: flex;
+  }
+
+  .rhNav a,
+  .rhNav span {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 10px 4px;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+  }
+
+  .rhNav a.ativo {
+    border-bottom: 1px solid #eee;
+    border-left: 3px solid #d90000;
+    padding-left: 10px;
+  }
+
+  .rhConteudo {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 420px) {
+  .rhCabecalho {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .rhLogo {
+    width: 28px;
+    height: 28px;
+  }
+
+  .rhMarca strong {
+    font-size: 13px;
+  }
+}
+
+
+/* Botao SAIR sempre acessivel no cabecalho em telas pequenas. */
+@media (max-width: 700px) {
+  .folhaHeader {
+    display: flex;
+    position: relative;
+    align-items: center;
+    min-height: 54px;
+    height: auto;
+    gap: 10px;
+  }
+
+  .folhaMenuBotao {
+    order: 2;
+    margin-left: auto;
+    flex: 0 0 39px;
+    width: 39px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dedede;
+    background: #fff;
+    color: #d60000;
+    font-size: 22px;
+    padding: 0;
+  }
+
+  .folhaUsuario {
+    order: 3;
+    display: flex !important;
+    align-items: center;
+    gap: 0;
+    margin-left: 0;
+    padding: 0;
+    border: 0;
+    flex: 0 0 auto;
+  }
+
+  .folhaUsuario .folhaAvatar,
+  .folhaUsuario > div {
+    display: none !important;
+  }
+
+  .folhaUsuario button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+    padding: 0 10px;
+    border: 1px solid #dedede;
+    border-radius: 0;
+    background: #fff;
+    color: #888;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 380px) {
+  .folhaLogoArea { gap: 7px; min-width: 0; }
+  .folhaLogoArea strong { font-size: 12px; }
+  .folhaUsuario button { min-height: 32px; padding: 0 9px; }
+  .folhaMenuBotao { font-size: 23px; padding: 3px; }
 }

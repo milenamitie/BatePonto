@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import ProfessorNav from "@/app/components/ProfessorNav";
 
 type Servidor = {
   id: number;
@@ -209,45 +210,7 @@ export default function PaginaProfessor() {
 
   return (
     <main className="folhaPagina">
-      <header className="folhaHeader">
-        <div className="folhaLogoArea">
-          <div className="folhaLogo">BP</div>
-          <strong>BatePonto</strong>
-        </div>
-
-        <nav className="folhaNav">
-          <a className="ativo" href="/pagina_professor">
-            Folha de Ponto
-          </a>
-          <a href="/pagina_professor/grade">
-            Grade de Aulas
-          </a>
-          <a href="/pagina_professor/historico">
-            Histórico
-          </a>
-          <a href="#">Justificativas & Compensações</a>
-          <a href="#">Notificações</a>
-          <a href="#">Gerar PDF</a>
-        </nav>
-
-        <div className="folhaUsuario">
-          <div className="folhaAvatar">PF</div>
-
-          <div>
-            <strong>{servidor?.nome_completo || "Professor"}</strong>
-            <span>Professor</span>
-          </div>
-
-          <button
-            onClick={() => {
-              localStorage.removeItem("servidorId");
-              router.push("/");
-            }}
-          >
-            SAIR
-          </button>
-        </div>
-      </header>
+      <ProfessorNav paginaAtiva="folha" nomeProfessor={servidor?.nome_completo || "Professor"} />
 
       <div className="folhaBreadcrumb">
         <span>Sistema</span>

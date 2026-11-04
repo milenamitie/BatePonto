@@ -1,4 +1,5 @@
 "use client";
+import MenuRH from "../../components/MenuRH";
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -246,10 +247,6 @@ export default function Grades() {
     }
   }
 
-  function sair() {
-    localStorage.removeItem("cargoUsuario");
-    router.replace("/");
-  }
 
   const gradesFiltradas = useMemo(() => {
     if (professorFiltro === "todos") {
@@ -301,32 +298,7 @@ export default function Grades() {
 
   return (
     <div className="rhPagina">
-      <header className="rhCabecalho">
-        <div className="rhMarca">
-          <div className="rhLogo">BP</div>
-          <strong>BatePonto</strong>
-          <span>•</span>
-          <b>RECURSOS HUMANOS</b>
-        </div>
-
-        <div className="rhUsuario">
-          <strong>Recursos Humanos</strong>
-          <small>Gestão de Pessoas</small>
-          <button onClick={sair}>SAIR</button>
-        </div>
-      </header>
-
-      <nav className="rhNav">
-        <a href="/pagina_rh">Painel</a>
-        <a href="/pagina_rh/funcionarios">Funcionários</a>
-        <a className="ativo" href="/pagina_rh/grades">
-          Grades
-        </a>
-        <a href="/pagina_rh/regras_ponto">Regras de Ponto</a>
-        <span>Fechamento Mensal</span>
-        <span>Relatórios</span>
-        <span>Gerar PDF</span>
-      </nav>
+      <MenuRH />
 
       <div className="rhConteudo">
         <div className="breadcrumb">
