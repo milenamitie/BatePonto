@@ -3182,3 +3182,2305 @@ footer {
   .folhaUsuario button { min-height: 32px; padding: 0 9px; }
   .folhaMenuBotao { font-size: 23px; padding: 3px; }
 }
+
+.justConteudo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  align-items: start;
+  column-gap: 22px;
+  row-gap: 0;
+  width: 100%;
+  max-width: 1500px;
+  box-sizing: border-box;
+  padding: 27px 30px 60px;
+  margin: 0 auto;
+}
+
+.justTitulo,
+.justSecaoTitulo,
+.justHistoricoTopo,
+.justItemPrincipal,
+.justRodapeFormulario {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.justTitulo {
+  grid-column: 1 / -1;
+  margin-bottom: 25px;
+}
+
+.justEtiqueta,
+.justSecaoTitulo span,
+.justHistoricoTopo span {
+  color: #d60000;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.justTitulo h1 {
+  margin: 7px 0 5px;
+  font-size: 30px;
+  letter-spacing: -1px;
+}
+
+.justTitulo p,
+.justRodapeFormulario p {
+  margin: 0;
+  color: #999;
+  font-size: 13px;
+}
+
+.justTitulo > button,
+.justRodapeFormulario button,
+.justSucesso button {
+  min-height: 40px;
+  padding: 0 20px;
+  border: 0;
+  background: #d60000;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.justFormulario,
+.justHistorico,
+.justSucesso {
+  background: #fff;
+  border: 1px solid #ddd;
+}
+
+.justFormulario {
+  grid-column: 1;
+  min-width: 0;
+  padding: 25px;
+}
+
+.justSecaoTitulo {
+  margin-bottom: 20px;
+}
+
+.justSecaoTitulo h2,
+.justHistoricoTopo h2 {
+  margin: 6px 0 0;
+  font-size: 19px;
+}
+
+.justSecaoTitulo small {
+  color: #aaa;
+  font-size: 11px;
+}
+
+.justTipos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 23px;
+}
+
+.justTipos button {
+  min-height: 85px;
+  padding: 17px;
+  text-align: left;
+  background: #fff;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.justTipos button.selecionado {
+  border: 2px solid #d60000;
+  background: #fffafa;
+  padding: 16px;
+}
+
+.justTipos strong,
+.justTipos span {
+  display: block;
+}
+
+.justTipos strong {
+  margin-bottom: 7px;
+  font-size: 14px;
+}
+
+.justTipos span {
+  color: #999;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.justCampos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 14px;
+}
+
+.justCampos label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: #888;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .7px;
+}
+
+.justCampos input,
+.justCampos select,
+.justCampos textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 0;
+  background: #fff;
+  color: #333;
+  padding: 11px 12px;
+  font: 13px Arial, sans-serif;
+}
+
+.justCampos input,
+.justCampos select {
+  height: 42px;
+}
+
+.justCampos textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.justCampos input:focus,
+.justCampos select:focus,
+.justCampos textarea:focus {
+  outline: none;
+  border-color: #d60000;
+}
+
+.justCampoCompleto {
+  grid-column: 1 / -1;
+}
+
+.justAnexos input {
+  height: auto;
+  padding: 12px;
+  border-style: dashed;
+}
+
+.justAnexos small {
+  color: #aaa;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.justArquivos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.justArquivos span {
+  padding: 6px 9px;
+  background: #f5f5f5;
+  color: #666;
+  font-size: 10px;
+}
+
+.justErro {
+  margin-top: 15px;
+  padding: 11px 13px;
+  border-left: 3px solid #d60000;
+  background: #fff5f5;
+  color: #c00;
+  font-size: 12px;
+}
+
+.justRodapeFormulario {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #eee;
+}
+
+.justRodapeFormulario p {
+  line-height: 1.5;
+}
+
+.justRodapeFormulario p strong {
+  color: #d18a00;
+}
+
+.justHistorico {
+  grid-column: 2;
+  grid-row: 2;
+  min-width: 0;
+  margin-top: 0;
+  padding: 23px 25px;
+}
+
+.justHistoricoTopo {
+  margin-bottom: 18px;
+}
+
+.justHistoricoTopo > strong {
+  color: #aaa;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.justVazio {
+  padding: 30px 15px;
+  border: 1px dashed #ddd;
+  text-align: center;
+}
+
+.justVazio strong {
+  color: #555;
+  font-size: 13px;
+}
+
+.justVazio p {
+  margin: 7px 0 0;
+  color: #aaa;
+  font-size: 12px;
+}
+
+.justLista {
+  display: flex;
+  flex-direction: column;
+}
+
+.justItem {
+  padding: 17px 0;
+  border-top: 1px solid #eee;
+}
+
+.justItemTipo {
+  color: #d60000;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.justItem h3 {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.justItem p {
+  margin: 0;
+  color: #999;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.justItemDetalhe {
+  margin-top: 8px !important;
+  color: #666 !important;
+}
+
+.justStatus {
+  padding: 6px 10px;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.justStatusPendente {
+  border: 1px solid #f1d47d;
+  background: #fffaf0;
+  color: #c18400;
+}
+
+.justStatusAprovado {
+  border: 1px solid #a7ead1;
+  background: #edfff7;
+  color: #009b6d;
+}
+
+.justStatusReprovado {
+  border: 1px solid #ffcaca;
+  background: #fff5f5;
+  color: #d60000;
+}
+
+.justSucesso {
+  grid-column: 1;
+  grid-row: 2;
+  padding: 45px 20px;
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.justSucessoIcone {
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #a7ead1;
+  background: #edfff7;
+  color: #009b6d;
+  font-size: 25px;
+}
+
+.justSucesso > span {
+  color: #009b6d;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.justSucesso h2 {
+  margin: 8px 0;
+  font-size: 24px;
+}
+
+.justSucesso p {
+  color: #999;
+  font-size: 13px;
+}
+
+.justSucesso button {
+  margin-top: 12px;
+}
+
+@media (max-width: 900px) {
+  .justConteudo {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 20px;
+  }
+
+  .justTitulo,
+  .justFormulario,
+  .justHistorico,
+  .justSucesso {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .justHistorico {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .justConteudo {
+    padding: 20px 15px 40px;
+  }
+
+  .justTitulo,
+  .justRodapeFormulario {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .justTitulo h1 {
+    font-size: 25px;
+  }
+
+  .justTitulo > button,
+  .justRodapeFormulario button {
+    width: 100%;
+  }
+
+  .justFormulario,
+  .justHistorico {
+    padding: 18px 15px;
+  }
+
+  .justTipos,
+  .justCampos {
+    grid-template-columns: 1fr;
+  }
+
+  .justCampoCompleto {
+    grid-column: auto;
+  }
+
+  .justSecaoTitulo,
+  .justHistoricoTopo {
+    align-items: flex-start;
+  }
+
+  .justSecaoTitulo h2,
+  .justHistoricoTopo h2 {
+    font-size: 17px;
+  }
+
+  .justItemPrincipal {
+    align-items: flex-start;
+  }
+}
+
+.justPagina {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.justCabecalhoPagina {
+  margin-bottom: 25px;
+}
+
+.justCabecalhoPagina h1 {
+  margin: 0 0 8px;
+  color: #171717;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.justCabecalhoPagina p {
+  margin: 0;
+  color: #888;
+  font-size: 13px;
+}
+
+.justColunas {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr);
+  align-items: start;
+  gap: 22px;
+  width: 100%;
+}
+
+.justPainel {
+  min-width: 0;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .025);
+}
+
+.justPainelTopo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.justPainelTopo h2 {
+  margin: 0;
+  color: #222;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.justDecoracao {
+  width: 34px;
+  height: 3px;
+  background: #d60000;
+}
+
+.justFormulario {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  min-width: 0;
+}
+
+.justCampo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  color: #555;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .7px;
+}
+
+.justLabel {
+  display: block;
+  color: #777;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.justTipos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.justTipos button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 68px;
+  padding: 15px 17px;
+  border: 1px solid #dedede;
+  border-radius: 0;
+  background: #fff;
+  color: #444;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+
+.justTipos button:hover {
+  border-color: #d60000;
+}
+
+.justTipos button.selecionado {
+  padding: 14px 16px;
+  border: 2px solid #d60000;
+  background: #fffafa;
+  color: #b90000;
+}
+
+.justTipos button.selecionado::after {
+  display: none;
+}
+
+.justCampo input,
+.justCampo select,
+.justCampo textarea {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 11px 12px;
+  border: 1px solid #dedede;
+  border-radius: 0;
+  outline: none;
+  background: #fff;
+  color: #333;
+  font: 13px Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+.justCampo textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+
+.justCampo input:focus,
+.justCampo select:focus,
+.justCampo textarea:focus {
+  border-color: #d60000;
+}
+
+.justAnexos {
+  margin-top: 2px;
+}
+
+.justUpload {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 125px;
+  padding: 18px;
+  border: 1px dashed #ccc;
+  background: #fcfcfc;
+  color: #555;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+
+.justUpload:hover {
+  border-color: #d60000;
+  background: #fffafa;
+}
+
+.justUpload strong {
+  color: #d60000;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.justUpload b {
+  color: #444;
+  font-size: 12px;
+}
+
+.justUpload small {
+  color: #999;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.justUpload input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.justArquivos {
+  display: block;
+  margin-top: 7px;
+  color: #666;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+
+.justAvisoCompensacao {
+  margin: 0;
+  padding: 12px 14px;
+  border-left: 3px solid #d6a13a;
+  background: #fffaf0;
+  color: #80621f;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.justErro {
+  margin: 0;
+  padding: 11px 13px;
+  border-left: 3px solid #d60000;
+  background: #fff5f5;
+  color: #c00;
+  font-size: 12px;
+}
+
+.justEnviar {
+  width: 100%;
+  min-height: 46px;
+  margin-top: 2px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 0;
+  background: #d60000;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .7px;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.justEnviar:hover {
+  background: #b90000;
+}
+
+.justPainelHistorico {
+  display: flex;
+  flex-direction: column;
+}
+
+.justPainelHistorico .justPainelTopo {
+  margin-bottom: 18px;
+}
+
+.justVazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  padding: 25px 16px;
+  border: 1px dashed #ddd;
+  background: #fcfcfc;
+  text-align: center;
+}
+
+.justVazio strong {
+  color: #555;
+  font-size: 13px;
+}
+
+.justVazio p {
+  margin: 8px 0 0;
+  color: #999;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.justLista {
+  display: flex;
+  flex-direction: column;
+}
+
+.justItem {
+  padding: 16px 0;
+  border-top: 1px solid #eee;
+}
+
+.justItemPrincipal {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.justItem h3 {
+  margin: 0 0 6px;
+  color: #333;
+  font-size: 13px;
+}
+
+.justItem p {
+  margin: 0;
+  color: #999;
+  font-size: 11px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.justItemRodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.justItemRodape small {
+  color: #aaa;
+  font-size: 10px;
+}
+
+.justTagCompensacao,
+.justTagJustificativa {
+  display: inline-flex;
+  padding: 5px 8px;
+  background: #fff5f5;
+  color: #c00;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .5px;
+}
+
+.justTagCompensacao {
+  background: #fff8eb;
+  color: #a87516;
+}
+
+.justStatus {
+  flex-shrink: 0;
+  padding: 5px 8px;
+  border: 1px solid #f1d47d;
+  background: #fffaf0;
+  color: #c18400;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.justStatusAprovado {
+  border-color: #a7ead1;
+  background: #edfff7;
+  color: #009b6d;
+}
+
+.justStatusReprovado {
+  border-color: #ffcaca;
+  background: #fff5f5;
+  color: #d60000;
+}
+
+.justItemDetalhe {
+  margin-top: 8px !important;
+  color: #666 !important;
+}
+
+.justHistoricoRodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+  color: #999;
+  font-size: 11px;
+}
+
+.justHistoricoRodape strong {
+  color: #c00;
+  font-size: 10px;
+  letter-spacing: .5px;
+}
+
+.justSucesso {
+  padding: 35px 20px;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  text-align: center;
+}
+
+.justSucessoIcone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 14px;
+  border: 1px solid #a7ead1;
+  background: #edfff7;
+  color: #009b6d;
+  font-size: 25px;
+}
+
+.justSucesso h3 {
+  margin: 0 0 8px;
+  color: #333;
+  font-size: 19px;
+}
+
+.justSucesso p {
+  margin: 0;
+  color: #888;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.justSucesso button {
+  min-height: 42px;
+  margin-top: 18px;
+  padding: 0 18px;
+  border: 0;
+  background: #d60000;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .justColunas {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .justPagina {
+    padding: 22px 15px 35px;
+  }
+
+  .justCabecalhoPagina h1 {
+    font-size: 23px;
+  }
+
+  .justPainel {
+    padding: 18px 15px;
+  }
+
+  .justTipos {
+    grid-template-columns: 1fr;
+  }
+
+  .justTipos button {
+    min-height: 56px;
+  }
+
+  .justHistoricoRodape {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+.folhaPagina .justPagina {
+  display: block;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.folhaPagina .justCabecalhoPagina {
+  display: block;
+  margin: 0 0 25px;
+}
+
+.folhaPagina .justCabecalhoPagina h1 {
+  margin: 0 0 8px;
+  color: #171717;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.folhaPagina .justCabecalhoPagina p {
+  margin: 0;
+  color: #888;
+  font-size: 13px;
+}
+
+.folhaPagina .justColunas {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr);
+  align-items: start;
+  gap: 22px;
+  width: 100%;
+}
+
+.folhaPagina .justPainel {
+  display: block;
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .025);
+  box-sizing: border-box;
+}
+
+.folhaPagina .justPainelTopo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 22px;
+}
+
+.folhaPagina .justPainelTopo h2 {
+  margin: 0;
+  color: #222;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.folhaPagina .justFormulario {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 18px;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.folhaPagina .justCampo {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  color: #555;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .7px;
+  box-sizing: border-box;
+}
+
+.folhaPagina .justLabel {
+  display: block;
+  color: #777;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.folhaPagina .justTipos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+  margin: 0;
+}
+
+.folhaPagina .justTipos button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 68px;
+  padding: 15px 17px;
+  border: 1px solid #dedede;
+  border-radius: 0;
+  background: #fff;
+  color: #444;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.folhaPagina .justTipos button.selecionado {
+  padding: 14px 16px;
+  border: 2px solid #d60000;
+  background: #fffafa;
+  color: #b90000;
+}
+
+.folhaPagina .justCampo input,
+.folhaPagina .justCampo select,
+.folhaPagina .justCampo textarea {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 11px 12px;
+  border: 1px solid #dedede;
+  border-radius: 0;
+  outline: none;
+  background: #fff;
+  color: #333;
+  font: 13px Arial, sans-serif;
+  letter-spacing: 0;
+  box-sizing: border-box;
+}
+
+.folhaPagina .justCampo textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+
+.folhaPagina .justUpload {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 125px;
+  padding: 18px;
+  border: 1px dashed #ccc;
+  background: #fcfcfc;
+  color: #555;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.folhaPagina .justUpload strong {
+  color: #d60000;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.folhaPagina .justUpload b {
+  color: #444;
+  font-size: 12px;
+}
+
+.folhaPagina .justUpload small {
+  color: #999;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.folhaPagina .justUpload input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.folhaPagina .justEnviar {
+  display: block;
+  width: 100%;
+  min-height: 46px;
+  margin: 2px 0 0;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 0;
+  background: #d60000;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .7px;
+  cursor: pointer;
+}
+
+.folhaPagina .justPainelHistorico {
+  display: flex;
+  flex-direction: column;
+}
+
+.folhaPagina .justVazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  padding: 25px 16px;
+  border: 1px dashed #ddd;
+  background: #fcfcfc;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.folhaPagina .justHistoricoRodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+  color: #999;
+  font-size: 11px;
+}
+
+@media (max-width: 900px) {
+  .folhaPagina .justPagina {
+    padding: 24px 20px 35px;
+  }
+
+  .folhaPagina .justColunas {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .folhaPagina .justPagina {
+    padding: 22px 15px 35px;
+  }
+
+  .folhaPagina .justCabecalhoPagina h1 {
+    font-size: 23px;
+  }
+
+  .folhaPagina .justPainel {
+    padding: 18px 15px;
+  }
+
+  .folhaPagina .justTipos {
+    grid-template-columns: 1fr;
+  }
+
+  .folhaPagina .justHistoricoRodape {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+
+.gestaoPagina {
+  min-height: 100vh;
+  background: #f7f7f7;
+  color: #111;
+  font-family: Arial, sans-serif;
+}
+
+.gestaoCabecalho {
+  min-height: 62px;
+  background: #fff;
+  border-top: 4px solid #d90000;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 30px;
+}
+
+.gestaoMarca,
+.gestaoUsuario,
+.gestaoNav {
+  display: flex;
+  align-items: center;
+}
+
+.gestaoMarca {
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.gestaoLogo {
+  width: 29px;
+  height: 29px;
+  background: #d90000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.gestaoMarca strong {
+  font-size: 14px;
+}
+
+.gestaoSeparador {
+  color: #bbb;
+}
+
+.gestaoCargo {
+  color: #d90000;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.gestaoNav {
+  align-self: stretch;
+  justify-content: center;
+  gap: 24px;
+}
+
+.gestaoNav a {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-bottom: 2px solid transparent;
+  color: #777;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.gestaoNav a:hover,
+.gestaoNav a.gestaoNavAtivo {
+  color: #d90000;
+}
+
+.gestaoNav a.gestaoNavAtivo {
+  border-bottom-color: #d90000;
+}
+
+.gestaoContador {
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  border-radius: 20px;
+  background: #d90000;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.gestaoUsuario {
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.gestaoAvatar {
+  width: 31px;
+  height: 31px;
+  background: #d90000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.gestaoUsuario div:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.gestaoUsuario strong {
+  font-size: 11px;
+}
+
+.gestaoUsuario small {
+  color: #999;
+  font-size: 10px;
+}
+
+.gestaoUsuario button {
+  height: 32px;
+  padding: 0 13px;
+  margin-left: 8px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #888;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.gestaoUsuario button:hover {
+  color: #d90000;
+  border-color: #d90000;
+}
+
+.gestaoUsuario button:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+.gestaoHamburguer {
+  display: none;
+}
+
+.gestaoBreadcrumb {
+  min-height: 43px;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  color: #999;
+  font-size: 11px;
+}
+
+.gestaoBreadcrumb span {
+  color: #ccc;
+}
+
+.gestaoBreadcrumb b {
+  color: #d90000;
+}
+
+.gestaoConteudo {
+  padding: 24px 30px 45px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.gestaoErro {
+  padding: 12px 15px;
+  margin-bottom: 18px;
+  border: 1px solid #f0cccc;
+  background: #fff5f5;
+  color: #d90000;
+  font-size: 12px;
+}
+
+.gestaoIndicadores {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.gestaoIndicadores article {
+  min-height: 110px;
+  padding: 18px 16px;
+  background: #fff;
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.gestaoIndicadores article > span {
+  color: #999;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.gestaoIndicadores article strong {
+  font-size: 29px;
+  font-weight: 500;
+}
+
+.gestaoIndicadores article small {
+  color: #aaa;
+  font-size: 11px;
+}
+
+.gestaoIndicadores article.gestaoIndicadorAlerta {
+  border: 1px solid #d90000;
+}
+
+.gestaoIndicadorAlerta strong {
+  color: #d90000;
+}
+
+.gestaoPainelGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.gestaoCard {
+  min-width: 0;
+  min-height: 330px;
+  padding: 22px 20px;
+  background: #fff;
+  border: 1px solid #e2e2e2;
+}
+
+.gestaoCardCabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.gestaoCardCabecalho h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.gestaoCardCabecalho a {
+  color: #d90000;
+  font-size: 11px;
+  font-weight: bold;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.gestaoCardCabecalho a:hover {
+  text-decoration: underline;
+}
+
+.gestaoListaSolicitacoes {
+  display: flex;
+  flex-direction: column;
+}
+
+.gestaoSolicitacao {
+  min-height: 65px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.gestaoSolicitacao:last-child {
+  border-bottom: 0;
+}
+
+.gestaoIniciais {
+  width: 33px;
+  height: 33px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fde8e8;
+  color: #d90000;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.gestaoSolicitacaoInfo {
+  min-width: 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.gestaoSolicitacaoInfo strong {
+  overflow: hidden;
+  color: #111;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gestaoSolicitacaoInfo span {
+  color: #999;
+  font-size: 11px;
+}
+
+.gestaoStatus {
+  flex-shrink: 0;
+  padding: 5px 9px;
+  border: 1px solid #f0d28a;
+  background: #fffaf0;
+  color: #c77700;
+  font-size: 10px;
+}
+
+.gestaoStatusAprovado {
+  border-color: #b8efd8;
+  background: #edfff7;
+  color: #008b63;
+}
+
+.gestaoStatusReprovado {
+  border-color: #f0cccc;
+  background: #fff5f5;
+  color: #d90000;
+}
+
+.gestaoMensagem {
+  color: #999;
+  font-size: 12px;
+}
+
+.gestaoVazio {
+  min-height: 210px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  text-align: center;
+}
+
+.gestaoVazio strong {
+  color: #555;
+  font-size: 13px;
+}
+
+.gestaoVazio span {
+  max-width: 300px;
+  color: #999;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.gestaoEmBreve {
+  padding: 5px 8px;
+  background: #f5f5f5;
+  color: #999;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: .5px;
+}
+
+.gestaoAlertaInfo {
+  display: flex;
+  gap: 13px;
+  padding: 17px 14px;
+  margin-bottom: 10px;
+  border-left: 4px solid #d90000;
+  background: #fff7f7;
+}
+
+.gestaoAlertaInfo > span {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d90000;
+  border-radius: 50%;
+  color: #d90000;
+  font-size: 12px;
+}
+
+.gestaoAlertaInfo strong {
+  font-size: 12px;
+}
+
+.gestaoAlertaInfo p {
+  margin: 7px 0 0;
+  color: #777;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.gestaoAlertaInfo.gestaoAlertaNeutro {
+  border-left-color: #e7a900;
+  background: #fffdf5;
+}
+
+.gestaoAlertaNeutro > span {
+  border-color: #e7a900;
+  color: #c58d00;
+}
+
+@media (max-width: 1150px) {
+  .gestaoCabecalho {
+    gap: 12px;
+    padding: 0 18px;
+  }
+
+  .gestaoNav {
+    gap: 13px;
+  }
+
+  .gestaoNav a {
+    font-size: 11px;
+  }
+
+  .gestaoUsuario {
+    gap: 7px;
+  }
+
+  .gestaoUsuario button {
+    margin-left: 2px;
+    padding: 0 9px;
+  }
+}
+
+@media (max-width: 900px) {
+  .gestaoCabecalho {
+    min-height: 62px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .gestaoHamburguer {
+    width: 38px;
+    height: 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-left: auto;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  .gestaoHamburguer span {
+    width: 18px;
+    height: 2px;
+    background: #d90000;
+  }
+
+  .gestaoNav {
+    display: none;
+    position: absolute;
+    top: 58px;
+    left: 0;
+    right: 0;
+    padding: 8px 18px 15px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, .06);
+  }
+
+  .gestaoNav.gestaoNavAberta {
+    display: flex;
+  }
+
+  .gestaoNav a {
+    min-height: 43px;
+    border-bottom: 1px solid #eee;
+    justify-content: space-between;
+  }
+
+  .gestaoNav a.gestaoNavAtivo {
+    border-bottom: 1px solid #eee;
+  }
+
+  .gestaoIndicadores {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gestaoPainelGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .gestaoCard {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .gestaoCabecalho {
+    padding: 0 14px;
+  }
+
+  .gestaoMarca {
+    gap: 8px;
+  }
+
+  .gestaoMarca strong {
+    font-size: 13px;
+  }
+
+  .gestaoSeparador {
+    display: none;
+  }
+
+  .gestaoCargo {
+    font-size: 10px;
+  }
+
+  .gestaoUsuario {
+    gap: 6px;
+  }
+
+  .gestaoUsuario div:nth-child(2) {
+    display: none;
+  }
+
+  .gestaoUsuario button {
+    height: 30px;
+    margin-left: 0;
+    padding: 0 8px;
+    font-size: 9px;
+  }
+
+  .gestaoBreadcrumb {
+    min-height: 38px;
+    padding: 0 15px;
+    font-size: 10px;
+  }
+
+  .gestaoConteudo {
+    padding: 18px 14px 30px;
+  }
+
+  .gestaoIndicadores {
+    gap: 9px;
+  }
+
+  .gestaoIndicadores article {
+    min-height: 100px;
+    padding: 14px 12px;
+  }
+
+  .gestaoIndicadores article > span {
+    font-size: 9px;
+    line-height: 1.4;
+  }
+
+  .gestaoIndicadores article strong {
+    font-size: 25px;
+  }
+
+  .gestaoIndicadores article small {
+    font-size: 10px;
+  }
+
+  .gestaoPainelGrid {
+    gap: 14px;
+    margin-top: 16px;
+  }
+
+  .gestaoCard {
+    padding: 18px 14px;
+  }
+
+  .gestaoCardCabecalho {
+    align-items: flex-start;
+  }
+
+  .gestaoCardCabecalho h2 {
+    font-size: 14px;
+  }
+
+  .gestaoCardCabecalho a {
+    font-size: 10px;
+  }
+
+  .gestaoSolicitacao {
+    gap: 8px;
+  }
+
+  .gestaoIniciais {
+    width: 29px;
+    height: 29px;
+    font-size: 9px;
+  }
+
+  .gestaoSolicitacaoInfo strong {
+    font-size: 11px;
+  }
+
+  .gestaoSolicitacaoInfo span {
+    font-size: 10px;
+  }
+
+  .gestaoStatus {
+    padding: 4px 6px;
+    font-size: 9px;
+  }
+
+  .gestaoAlertaInfo {
+    padding: 13px 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .gestaoCargo {
+    display: none;
+  }
+
+  .gestaoIndicadores {
+    grid-template-columns: 1fr;
+  }
+
+  .gestaoSolicitacao {
+    flex-wrap: wrap;
+    padding: 9px 0;
+  }
+
+  .gestaoStatus {
+    margin-left: 37px;
+  }
+}
+
+
+.gestaoCabecalho {
+  min-height: 60px;
+  background: #fff;
+  border-top: 4px solid #d90000;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+}
+
+.gestaoMarca,
+.gestaoUsuario {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gestaoLogo {
+  width: 30px;
+  height: 30px;
+  background: #d90000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.gestaoMarca strong {
+  font-size: 15px;
+}
+
+.gestaoMarca span {
+  color: #aaa;
+}
+
+.gestaoMarca b {
+  color: #d90000;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+}
+
+.gestaoUsuario {
+  gap: 10px;
+  font-size: 12px;
+}
+
+.gestaoUsuario small {
+  color: #aaa;
+}
+
+.gestaoUsuario button {
+  border: 1px solid #ddd;
+  padding: 8px 13px;
+  color: #777;
+  background: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.gestaoUsuario button:hover {
+  color: #d90000;
+  border-color: #d90000;
+}
+
+.gestaoNav {
+  min-height: 48px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  padding: 0 30px;
+}
+
+.gestaoNav a {
+  color: #777;
+  text-decoration: none;
+  padding: 17px 0;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.gestaoNav a:hover,
+.gestaoNav a.ativo {
+  color: #d90000;
+}
+
+.gestaoNav a.ativo {
+  border-bottom: 2px solid #d90000;
+  font-weight: bold;
+}
+
+.gestaoMenuBotao {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .gestaoCabecalho {
+    padding: 0 18px;
+  }
+
+  .gestaoMenuBotao {
+    display: block;
+    margin-left: auto;
+    width: 38px;
+    height: 36px;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #d90000;
+    font-size: 21px;
+    cursor: pointer;
+  }
+
+  .gestaoNav {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 8px 18px 15px;
+  }
+
+  .gestaoNav.gestaoMenuAberto {
+    display: flex;
+  }
+
+  .gestaoNav a {
+    padding: 13px 0;
+    border-bottom: 1px solid #eee;
+  }
+}
+
+@media (max-width: 600px) {
+  .gestaoCabecalho {
+    padding: 0 15px;
+  }
+
+  .gestaoMarca {
+    gap: 8px;
+  }
+
+  .gestaoMarca strong {
+    font-size: 13px;
+  }
+
+  .gestaoMarca b {
+    font-size: 10px;
+  }
+
+  .gestaoUsuario {
+    gap: 6px;
+  }
+
+  .gestaoUsuario strong,
+  .gestaoUsuario small {
+    display: none;
+  }
+
+  .gestaoUsuario button {
+    margin-left: 0;
+    padding: 7px 9px;
+    font-size: 10px;
+  }
+}
+
+.gestaoNav {
+  justify-content: flex-start;
+}
+
+/* Navegacao do professor em duas linhas, seguindo o layout do RH. */
+.professorHeader {
+  position: relative;
+  z-index: 40;
+  width: 100%;
+  background: #fff;
+  border-top: 4px solid #d60000;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.professorTopo {
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 0 30px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.professorMarca,
+.professorUsuario {
+  display: flex;
+  align-items: center;
+}
+
+.professorMarca {
+  min-width: 0;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.professorLogo {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #d60000;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.professorMarca > strong {
+  color: #111;
+  font-size: 14px;
+}
+
+.professorSeparador {
+  color: #aaa;
+  font-size: 15px;
+}
+
+.professorMarca > b {
+  color: #d60000;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.professorUsuario {
+  flex: 0 0 auto;
+  gap: 9px;
+  font-size: 12px;
+}
+
+.professorAvatar {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #d60000;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.professorIdentificacao {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 70px;
+}
+
+.professorIdentificacao strong {
+  color: #222;
+  font-size: 12px;
+}
+
+.professorIdentificacao span {
+  color: #999;
+  font-size: 10px;
+}
+
+.professorUsuario > button {
+  height: 32px;
+  margin-left: 8px;
+  padding: 0 14px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #777;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.professorUsuario > button:hover {
+  border-color: #d60000;
+  color: #d60000;
+}
+
+.professorNav {
+  min-height: 48px;
+  display: flex;
+  align-items: stretch;
+  gap: 34px;
+  padding: 0 30px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.professorNav a {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border-bottom: 2px solid transparent;
+  color: #777;
+  font-size: 13px;
+  font-weight: 400;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.professorNav a:hover {
+  color: #d60000;
+}
+
+.professorNav a.ativo {
+  border-bottom-color: #d60000;
+  color: #d60000;
+  font-weight: 700;
+}
+
+.professorMenuBotao {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .professorNav {
+    gap: 22px;
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .professorNav a {
+    font-size: 12px;
+  }
+
+  .professorTopo {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+}
+
+@media (max-width: 760px) {
+  .professorTopo {
+    min-height: 58px;
+    gap: 10px;
+    padding: 0 15px;
+  }
+
+  .professorMarca {
+    gap: 8px;
+  }
+
+  .professorMarca > strong {
+    font-size: 13px;
+  }
+
+  .professorMarca > b {
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+
+  .professorMenuBotao {
+    width: 38px;
+    height: 36px;
+    flex: 0 0 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #d60000;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .professorUsuario {
+    gap: 0;
+  }
+
+  .professorAvatar,
+  .professorIdentificacao {
+    display: none;
+  }
+
+  .professorUsuario > button {
+    height: 32px;
+    margin-left: 0;
+    padding: 0 10px;
+  }
+
+  .professorNav {
+    display: none;
+    position: absolute;
+    top: 58px;
+    left: 0;
+    right: 0;
+    min-height: 0;
+    padding: 8px 16px 14px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    border-bottom: 1px solid #ddd;
+    background: #fff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, .08);
+  }
+
+  .professorNav.professorNavAberta {
+    display: flex;
+  }
+
+  .professorNav a {
+    min-height: 44px;
+    padding: 0 5px;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+  }
+
+  .professorNav a.ativo {
+    padding-left: 10px;
+    border-bottom: 1px solid #eee;
+    border-left: 3px solid #d60000;
+  }
+}
+
+@media (max-width: 420px) {
+  .professorTopo {
+    padding: 0 10px;
+    gap: 7px;
+  }
+
+  .professorMarca {
+    gap: 6px;
+  }
+
+  .professorLogo {
+    width: 28px;
+    height: 28px;
+    flex-basis: 28px;
+  }
+
+  .professorMarca > strong {
+    font-size: 12px;
+  }
+
+  .professorMarca > b {
+    font-size: 9px;
+    letter-spacing: .6px;
+  }
+
+  .professorSeparador {
+    font-size: 12px;
+  }
+
+  .professorMenuBotao {
+    width: 34px;
+    flex-basis: 34px;
+  }
+
+  .professorUsuario > button {
+    padding: 0 8px;
+    font-size: 9px;
+  }
+}
