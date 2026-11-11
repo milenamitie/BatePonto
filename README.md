@@ -16,7 +16,7 @@ Para uma instalação nova, sem banco existente na rede, inicie também o MySQL 
 docker compose --profile database up --build -d
 ```
 
-Não inicie o perfil `database` se outro MySQL já estiver usando o volume `mysql_data`. Acesse [http://localhost:8080](http://localhost:8080) ou [http://localhost:3000](http://localhost:3000); ambos apontam para a mesma interface atual. O Compose constrói a API e a interface a partir do código deste repositório; somente a interface é publicada na máquina hospedeira. Gestores podem abrir **Folha de Ponto** para consultar, imprimir ou salvar em PDF os registros mensais dos funcionários. Em uma instalação nova, o banco é inicializado com as tabelas do sistema e o usuário inicial `rh@instituicao.sp.gov.br` (senha `987654`). Altere essa senha antes de usar o sistema em produção.
+Não inicie o perfil `database` se outro MySQL já estiver usando o volume `mysql_data`. Acesse [http://localhost:3000](http://localhost:3000). O Compose constrói a API e a interface a partir do código deste repositório; somente a interface é publicada na máquina hospedeira.
 
 Se as portas padrão já estiverem ocupadas, altere `APP_PORT` e `APP_ALT_PORT` no arquivo `.env` para portas disponíveis.
 
