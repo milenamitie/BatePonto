@@ -262,6 +262,53 @@ export default function Grades() {
     grades.map((grade) => grade.servidor_id)
   ).size;
 
+  function minutosDoHorario(horario: string) {
+    const [horas, minutos] = horario.split(":").map(Number);
+    return horas * 60 + minutos;
+  }
+
+  // Distribui aulas que se cruzam em faixas lado a lado dentro do mesmo dia.
+  function obterFaixas(aulas: Grade[]) {
+    const ordenadas = [...aulas].sort(
+      (a, b) =>
+        minutosDoHorario(a.hora_inicio) - minutosDoHorario(b.hora_inicio) ||
+        minutosDoHorario(a.hora_fim) - minutosDoHorario(b.hora_fim)
+    );
+    const resultado = new Map<number, { faixa: number; total: number }>();
+    let grupo: Grade[] = [];
+    let fimDoGrupo = -1;
+
+    function distribuirGrupo() {
+      if (grupo.length === 0) return;
+      const finsDasFaixas: number[] = [];
+      const distribuicao: Array<{ id: number; faixa: number }> = [];
+
+      for (const aula of grupo) {
+        const inicio = minutosDoHorario(aula.hora_inicio);
+        const fim = minutosDoHorario(aula.hora_fim);
+        let faixa = finsDasFaixas.findIndex((fimFaixa) => fimFaixa <= inicio);
+        if (faixa === -1) faixa = finsDasFaixas.length;
+        finsDasFaixas[faixa] = fim;
+        distribuicao.push({ id: aula.id, faixa });
+      }
+
+      const total = Math.max(1, finsDasFaixas.length);
+      distribuicao.forEach(({ id, faixa }) => resultado.set(id, { faixa, total }));
+      grupo = [];
+      fimDoGrupo = -1;
+    }
+
+    for (const aula of ordenadas) {
+      const inicio = minutosDoHorario(aula.hora_inicio);
+      const fim = minutosDoHorario(aula.hora_fim);
+      if (grupo.length > 0 && inicio >= fimDoGrupo) distribuirGrupo();
+      grupo.push(aula);
+      fimDoGrupo = Math.max(fimDoGrupo, fim);
+    }
+    distribuirGrupo();
+    return resultado;
+  }
+
   function obterPosicao(hora: string) {
     const [horas, minutos] = hora.split(":").map(Number);
     const minutosTotais = horas * 60 + minutos;
@@ -362,6 +409,8 @@ export default function Grades() {
                   grade.dia_semana === dia && grade.status === "Ativo"
               );
 
+              const faixas = obterFaixas(aulasDoDia);
+
               return (
                 <div className="gradeColunaDia" key={dia}>
                   {horarios.map((horario) => (
@@ -378,6 +427,9 @@ export default function Grades() {
                           grade.hora_inicio,
                           grade.hora_fim
                         )}px`,
+                        left: `calc(${(faixas.get(grade.id)?.faixa ?? 0) * 100 / (faixas.get(grade.id)?.total ?? 1)}% + 4px)`,
+                        width: `calc(${100 / (faixas.get(grade.id)?.total ?? 1)}% - 8px)`,
+                        right: "auto",
                       }}
                     >
                       <strong>{grade.disciplina}</strong>

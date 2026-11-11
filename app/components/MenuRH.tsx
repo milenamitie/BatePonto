@@ -9,6 +9,7 @@ const links = [
   { href: "/pagina_rh/funcionarios", label: "Funcionários" },
   { href: "/pagina_rh/grades", label: "Grades" },
   { href: "/pagina_rh/regras_ponto", label: "Regras de Ponto" },
+  { href: "/pagina_rh/gerar_pdf", label: "Gerar PDF" },
 ];
 
 export default function MenuRH() {
@@ -66,7 +67,6 @@ export default function MenuRH() {
         })}
         <span>Fechamento Mensal</span>
         <span>Relatórios</span>
-        <span>Gerar PDF</span>
       </nav>
     </>
   );
