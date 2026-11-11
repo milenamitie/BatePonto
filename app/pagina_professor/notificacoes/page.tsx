@@ -82,7 +82,6 @@ export default function NotificacoesProfessor() {
       const prefs = localStorage.getItem(`bp_preferencias_notificacoes_${id}`);
       if (prefs) setPreferencias({ ...preferenciasPadrao, ...JSON.parse(prefs) });
     } catch {
-      // Se houver dados locais inválidos, a tela usa os valores padrão.
     }
     setDadosLocaisCarregados(true);
   }, [router]);

@@ -65,8 +65,6 @@ export default function MenuRH() {
             </Link>
           );
         })}
-        <span>Fechamento Mensal</span>
-        <span>Relatórios</span>
       </nav>
     </>
   );

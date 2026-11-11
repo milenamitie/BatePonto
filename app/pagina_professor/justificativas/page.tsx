@@ -10,12 +10,12 @@ type Solicitacao = {
   tipo: "Justificativa" | "Compensação";
   data: string;
   motivo: string;
-  observacoes: string;
-  horarioCompensacao?: string;
-  horas: string;
-  anexos: string[];
+  observacoes: string | null;
+  horario_compensacao: string | null;
+  horas: string | null;
+  anexos: string[] | null;
   status: "Pendente" | "Aprovado" | "Reprovado";
-  enviadaEm: string;
+  criada_em: string;
 };
 
 type Servidor = {
@@ -23,10 +23,19 @@ type Servidor = {
   nome_completo: string;
 };
 
-const chaveSolicitacoes = (id: number) => `solicitacoesProfessor_${id}`;
+function formatarData(data: string) {
+  if (!data) return "";
+  const [ano, mes, dia] = data.slice(0, 10).split("-");
+  return `${dia}/${mes}/${ano}`;
+}
+
+function formatarDataHora(data: string) {
+  if (!data) return "";
+  const [dia, hora] = data.split(" ");
+  return `${formatarData(dia)} ${hora?.slice(0, 5) || ""}`.trim();
+}
 
 export default function JustificativasProfessor() {
-  const [servidorId, setServidorId] = useState<number | null>(null);
   const [nomeProfessor, setNomeProfessor] = useState("Professor");
   const [tipo, setTipo] = useState<"Justificativa" | "Compensação">("Justificativa");
   const [data, setData] = useState("");
@@ -38,34 +47,66 @@ export default function JustificativasProfessor() {
   const [solicitacoes, setSolicitacoes] = useState<Solicitacao[]>([]);
   const [mensagem, setMensagem] = useState("");
   const [sucesso, setSucesso] = useState(false);
+  const [carregando, setCarregando] = useState(true);
+  const [enviando, setEnviando] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    const idSalvo = localStorage.getItem("servidorId");
-    if (!idSalvo || !Number(idSalvo)) {
+  async function carregarSolicitacoes() {
+    const resposta = await fetch("/api/solicitacoes", { cache: "no-store" });
+
+    if (resposta.status === 401 || resposta.status === 403) {
       router.replace("/");
       return;
     }
 
-    const id = Number(idSalvo);
-    setServidorId(id);
+    const dados = await resposta.json();
 
-    const salvas = localStorage.getItem(chaveSolicitacoes(id));
-    if (salvas) {
+    if (!resposta.ok) {
+      throw new Error(dados.mensagem || "Não foi possível carregar as solicitações.");
+    }
+
+    setSolicitacoes(
+      dados.map((item: Solicitacao) => ({
+        ...item,
+        anexos: Array.isArray(item.anexos) ? item.anexos : [],
+      }))
+    );
+  }
+
+  useEffect(() => {
+    async function iniciar() {
       try {
-        setSolicitacoes(JSON.parse(salvas));
-      } catch {
-        setSolicitacoes([]);
+        const respostaSessao = await fetch("/api/sessao", { cache: "no-store" });
+
+        if (!respostaSessao.ok) {
+          router.replace("/");
+          return;
+        }
+
+        const dadosSessao = await respostaSessao.json();
+
+        if (dadosSessao.usuario?.cargo !== "Professor" || !dadosSessao.usuario?.servidorId) {
+          router.replace("/");
+          return;
+        }
+
+        const respostaServidores = await fetch("/api/servidores", { cache: "no-store" });
+
+        if (respostaServidores.ok) {
+          const servidores: Servidor[] = await respostaServidores.json();
+          const atual = servidores.find((servidor) => servidor.id === dadosSessao.usuario.servidorId);
+          if (atual) setNomeProfessor(atual.nome_completo);
+        }
+
+        await carregarSolicitacoes();
+      } catch (erro) {
+        setMensagem(erro instanceof Error ? erro.message : "Erro ao carregar as solicitações.");
+      } finally {
+        setCarregando(false);
       }
     }
 
-    fetch("/api/servidores")
-      .then((resposta) => resposta.json())
-      .then((servidores: Servidor[]) => {
-        const atual = servidores.find((servidor) => servidor.id === id);
-        if (atual) setNomeProfessor(atual.nome_completo);
-      })
-      .catch(() => setNomeProfessor("Professor"));
+    iniciar();
   }, [router]);
 
   function selecionarArquivos(evento: ChangeEvent<HTMLInputElement>) {
@@ -73,45 +114,53 @@ export default function JustificativasProfessor() {
     setArquivos(selecionados);
   }
 
-  function enviarSolicitacao(evento: FormEvent<HTMLFormElement>) {
+  async function enviarSolicitacao(evento: FormEvent<HTMLFormElement>) {
     evento.preventDefault();
     setMensagem("");
 
-    if (!servidorId) {
-      setMensagem("Não foi possível identificar o professor.");
+    if (tipo === "Compensação" && (!horas || !horarioCompensacao || !observacoes.trim())) {
+      setMensagem("Preencha o horário, a quantidade de horas e o motivo da compensação.");
       return;
     }
 
-    if (tipo === "Compensação" && !horas) {
-      setMensagem("Informe a quantidade de horas para compensação.");
-      return;
+    setEnviando(true);
+
+    try {
+      const resposta = await fetch("/api/solicitacoes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          tipo,
+          data,
+          motivo,
+          observacoes,
+          horarioCompensacao: tipo === "Compensação" ? horarioCompensacao : null,
+          horas: tipo === "Compensação" ? horas : null,
+          anexos: arquivos.map((arquivo) => arquivo.name),
+        }),
+      });
+
+      const resultado = await resposta.json();
+
+      if (!resposta.ok) {
+        throw new Error(resultado.mensagem || "Não foi possível enviar a solicitação.");
+      }
+
+      await carregarSolicitacoes();
+      setSucesso(true);
+      setData("");
+      setMotivo("");
+      setObservacoes("");
+      setHorarioCompensacao("");
+      setHoras("");
+      setArquivos([]);
+      const campoArquivo = document.getElementById("anexosSolicitacao") as HTMLInputElement | null;
+      if (campoArquivo) campoArquivo.value = "";
+    } catch (erro) {
+      setMensagem(erro instanceof Error ? erro.message : "Erro ao enviar a solicitação.");
+    } finally {
+      setEnviando(false);
     }
-
-    const novaSolicitacao: Solicitacao = {
-      id: Date.now(),
-      tipo,
-      data,
-      motivo,
-      observacoes,
-      horarioCompensacao: tipo === "Compensação" ? horarioCompensacao : "",
-      horas: tipo === "Compensação" ? horas : "",
-      anexos: arquivos.map((arquivo) => arquivo.name),
-      status: "Pendente",
-      enviadaEm: new Date().toLocaleDateString("pt-BR"),
-    };
-
-    const atualizadas = [novaSolicitacao, ...solicitacoes];
-    setSolicitacoes(atualizadas);
-    localStorage.setItem(chaveSolicitacoes(servidorId), JSON.stringify(atualizadas));
-    setSucesso(true);
-    setData("");
-    setMotivo("");
-    setObservacoes("");
-    setHorarioCompensacao("");
-    setHoras("");
-    setArquivos([]);
-    const campoArquivo = document.getElementById("anexosSolicitacao") as HTMLInputElement | null;
-    if (campoArquivo) campoArquivo.value = "";
   }
 
   function novaSolicitacao() {
@@ -148,7 +197,7 @@ export default function JustificativasProfessor() {
               <div className="justSucesso">
                 <div className="justSucessoIcone">✓</div>
                 <h3>Solicitação enviada</h3>
-                <p>Seu gestor recebeu uma notificação por e-mail e analisará em breve.</p>
+                <p>Seu gestor recebeu sua solicitação e poderá analisá-la em breve.</p>
                 <button type="button" onClick={novaSolicitacao}>NOVA SOLICITAÇÃO</button>
               </div>
             ) : (
@@ -156,10 +205,10 @@ export default function JustificativasProfessor() {
                 <div className="justCampo">
                   <span className="justLabel">TIPO</span>
                   <div className="justTipos">
-                    <button type="button" className={tipo === "Justificativa" ? "selecionado" : ""} onClick={() => { setTipo("Justificativa"); setMotivo(""); }}>
+                    <button type="button" className={tipo === "Justificativa" ? "selecionado" : ""} onClick={() => { setTipo("Justificativa"); setMotivo(""); setObservacoes(""); }}>
                       Justificativa
                     </button>
-                    <button type="button" className={tipo === "Compensação" ? "selecionado" : ""} onClick={() => { setTipo("Compensação"); setMotivo(""); }}>
+                    <button type="button" className={tipo === "Compensação" ? "selecionado" : ""} onClick={() => { setTipo("Compensação"); setMotivo(""); setObservacoes(""); }}>
                       Compensação
                     </button>
                   </div>
@@ -231,7 +280,7 @@ export default function JustificativasProfessor() {
 
                 {tipo === "Compensação" && <p className="justAvisoCompensacao">Compensações debitam do banco de horas ou precisam de acordo com o gestor para reposição futura.</p>}
                 {mensagem && <div className="justErro">{mensagem}</div>}
-                <button className="justEnviar" type="submit">ENVIAR SOLICITAÇÃO</button>
+                <button className="justEnviar" type="submit" disabled={enviando}>{enviando ? "ENVIANDO..." : "ENVIAR SOLICITAÇÃO"}</button>
               </form>
             )}
           </section>
@@ -241,7 +290,9 @@ export default function JustificativasProfessor() {
               <h2>Solicitações Anteriores</h2>
             </div>
 
-            {solicitacoes.length === 0 ? (
+            {carregando ? (
+              <div className="justVazio"><strong>Carregando solicitações...</strong></div>
+            ) : solicitacoes.length === 0 ? (
               <div className="justVazio">
                 <strong>Nenhuma solicitação por enquanto</strong>
                 <p>Suas solicitações aparecerão aqui após o envio.</p>
@@ -253,18 +304,18 @@ export default function JustificativasProfessor() {
                     <div className="justItemPrincipal">
                       <div>
                         <h3>{solicitacao.motivo}</h3>
-                        <p>{solicitacao.data.split("-").reverse().join("/")}</p>
+                        <p>{formatarData(solicitacao.data)}</p>
                       </div>
                       <span className={`justStatus justStatus${solicitacao.status}`}>{solicitacao.status}</span>
                     </div>
                     <div className="justItemRodape">
                       <span className={solicitacao.tipo === "Compensação" ? "justTagCompensacao" : "justTagJustificativa"}>{solicitacao.tipo.toUpperCase()}</span>
-                      <small>por Gestão de Pessoas</small>
+                      <small>Enviada em {formatarDataHora(solicitacao.criada_em)}</small>
                     </div>
-                    {solicitacao.horarioCompensacao && <p className="justItemDetalhe">Horário da compensação: {solicitacao.horarioCompensacao}</p>}
+                    {solicitacao.horario_compensacao && <p className="justItemDetalhe">Horário da compensação: {solicitacao.horario_compensacao}</p>}
                     {solicitacao.observacoes && <p className="justItemDetalhe">Motivo/observações: {solicitacao.observacoes}</p>}
                     {solicitacao.horas && <p className="justItemDetalhe">Horas solicitadas: {solicitacao.horas}</p>}
-                    {solicitacao.anexos.length > 0 && <p className="justItemDetalhe">Anexos: {solicitacao.anexos.join(", ")}</p>}
+                    {!!solicitacao.anexos?.length && <p className="justItemDetalhe">Anexos: {solicitacao.anexos.join(", ")}</p>}
                   </article>
                 ))}
               </div>

@@ -155,7 +155,6 @@ export default function GerarPdfPage() {
     setBaixando(true);
 
     try {
-      // Gera um PDF real no navegador e inicia o download, sem abrir a janela de impressão.
       const largura = 595.28;
       const altura = 841.89;
       const margem = 40;

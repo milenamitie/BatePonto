@@ -528,7 +528,6 @@ export default function HistoricoProfessor() {
                                 abrirFolhaCompleta(mes.chave)
                               }
                             >
-                              VER FOLHA COMPLETA →
                             </button>
                           </div>
                         </>

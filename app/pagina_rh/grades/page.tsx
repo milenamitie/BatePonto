@@ -267,7 +267,6 @@ export default function Grades() {
     return horas * 60 + minutos;
   }
 
-  // Distribui aulas que se cruzam em faixas lado a lado dentro do mesmo dia.
   function obterFaixas(aulas: Grade[]) {
     const ordenadas = [...aulas].sort(
       (a, b) =>

@@ -175,20 +175,15 @@ export default function SistemaRH() {
               <span>→</span>
             </Link>
 
-            <a href="#">
+            <Link href="/pagina_rh/regras_ponto">
               ⚙ &nbsp; Configurar regras de ponto
               <span>→</span>
-            </a>
+            </Link>
 
-            <a href="#">
-              🔒 &nbsp; Fechar folhas pendentes
+            <Link href="/pagina_rh/gerar_pdf">
+              📊 &nbsp; Gerar relatório
               <span>→</span>
-            </a>
-
-            <a href="#">
-              📊 &nbsp; Gerar relatório diretoria
-              <span>→</span>
-            </a>
+            </Link>
           </div>
         </section>
       </div>
