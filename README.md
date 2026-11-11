@@ -20,16 +20,20 @@ Não inicie o perfil `database` se outro MySQL já estiver usando o volume `mysq
 
 Os dados do MySQL ficam no volume `mysql_data`. Os scripts em `database.sql` só são executados quando esse volume é criado pela primeira vez. Para parar os serviços, use `docker compose down`; para apagar também o banco persistido, use `docker compose down -v`.
 
-Para publicar as três imagens no Docker Hub, autentique-se e construa os repositórios definidos no Compose:
+As imagens atualizadas da interface e da API são publicadas no Docker Hub como `milenamitie/frontend-bateponto:latest` e `milenamitie/backend-bateponto:latest`. Para publicar novas versões, autentique-se, construa e envie:
 
 ```bash
 docker login
-docker build -f database.Dockerfile -t milenamitie/mysql-bateponto:latest .
-docker build -f backend/Dockerfile -t milenamitie/backend-bateponto:latest backend
-docker build -f dockerfile --build-arg API_INTERNAL_URL=http://backend-bateponto:3000 -t milenamitie/frontend-bateponto:latest .
-docker push milenamitie/mysql-bateponto:latest
+docker compose build backend-bateponto frontend-bateponto
 docker push milenamitie/backend-bateponto:latest
 docker push milenamitie/frontend-bateponto:latest
+```
+
+Para baixar as imagens publicadas e atualizar a interface e a API sem recriar o banco existente:
+
+```bash
+docker compose pull backend-bateponto frontend-bateponto
+docker compose up -d --no-build backend-bateponto frontend-bateponto
 ```
 
 ## Getting Started
@@ -60,20 +64,6 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Execução com Docker
-
-O Docker Compose executa a aplicação na porta `3000` e conecta ao MySQL em execução na máquina host.
-
-1. Copie `.env.example` para `.env` e configure `DB_PASSWORD` com a senha do MySQL.
-2. Crie o banco `bateponto` e aplique o schema de `database.sql` no MySQL do host.
-3. Com o Docker Desktop iniciado, execute:
-
-   ```bash
-   docker compose up --build
-   ```
-
-4. Acesse [http://localhost:3000](http://localhost:3000). Para encerrar, pressione `Ctrl+C` e execute `docker compose down`.
 
 ## Deploy on Vercel
 
