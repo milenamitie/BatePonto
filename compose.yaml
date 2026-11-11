@@ -58,8 +58,8 @@ services:
     container_name: frontend-bateponto
     restart: unless-stopped
     ports:
-      - "3000:3000"
-      - "8080:3000"
+      - "${APP_PORT:-3000}:3000"
+      - "${APP_ALT_PORT:-8080}:3000"
     depends_on:
       backend-bateponto:
         condition: service_healthy
