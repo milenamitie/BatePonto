@@ -23,6 +23,9 @@ services:
 
   backend-bateponto:
     image: milenamitie/backend-bateponto:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: backend-bateponto
     restart: unless-stopped
     environment:
@@ -48,6 +51,11 @@ services:
 
   frontend-bateponto:
     image: milenamitie/frontend-bateponto:latest
+    build:
+      context: .
+      dockerfile: dockerfile
+      args:
+        API_INTERNAL_URL: http://backend-bateponto:3000
     container_name: frontend-bateponto
     restart: unless-stopped
     ports:

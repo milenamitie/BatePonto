@@ -9,6 +9,7 @@ const db = mysql.createPool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME || "bateponto",
   port: Number(process.env.DB_PORT || 3306),
+  charset: "utf8mb4",
   waitForConnections: true,
   connectionLimit: 10,
 });
@@ -118,6 +119,70 @@ app.delete("/api/grades", async (request, response) => {
     return response.json({ mensagem: "Grade excluída com sucesso." });
   } catch {
     return response.status(500).json({ erro: "Erro ao excluir grade." });
+  }
+});
+
+app.get("/api/gestao/folha-ponto", async (request, response) => {
+  try {
+    const mes = request.query.mes;
+    const servidorIdParam = request.query.servidor_id;
+
+    if (typeof mes !== "string" || !/^\d{4}-(0[1-9]|1[0-2])$/.test(mes)) {
+      return response.status(400).json({
+        mensagem: "Informe um mês válido para gerar a folha de ponto.",
+      });
+    }
+
+    let servidorId = null;
+    if (servidorIdParam !== undefined) {
+      servidorId = Number(servidorIdParam);
+      if (!Number.isInteger(servidorId) || servidorId <= 0) {
+        return response.status(400).json({ mensagem: "Servidor inválido." });
+      }
+    }
+
+    const [servidores] = await db.query(
+      `SELECT id, nome_completo, matricula, cargo, regime, materia
+       FROM servidores
+       ORDER BY nome_completo`
+    );
+
+    let sql = `
+      SELECT
+        rp.id,
+        rp.servidor_id,
+        s.nome_completo,
+        s.matricula,
+        DATE_FORMAT(rp.data, '%Y-%m-%d') AS data,
+        CASE
+          WHEN rp.status = 'Falta' THEN NULL
+          ELSE TIME_FORMAT(rp.entrada, '%H:%i')
+        END AS entrada,
+        TIME_FORMAT(rp.saida, '%H:%i') AS saida,
+        TIME_FORMAT(rp.horario_previsto, '%H:%i') AS horario_previsto,
+        rp.atraso_minutos,
+        rp.status
+      FROM registros_ponto rp
+      INNER JOIN servidores s ON s.id = rp.servidor_id
+      WHERE rp.data >= ?
+        AND rp.data < DATE_ADD(?, INTERVAL 1 MONTH)
+    `;
+    const params = [`${mes}-01`, `${mes}-01`];
+
+    if (servidorId !== null) {
+      sql += " AND rp.servidor_id = ?";
+      params.push(servidorId);
+    }
+
+    sql += " ORDER BY s.nome_completo, rp.data, rp.id";
+
+    const [registros] = await db.query(sql, params);
+    return response.json({ servidores, registros });
+  } catch (error) {
+    console.error("Erro ao gerar folha de ponto:", error);
+    return response.status(500).json({
+      mensagem: "Não foi possível gerar a folha de ponto.",
+    });
   }
 });
 

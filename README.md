@@ -8,7 +8,7 @@ Copie `.env.example` para `.env` e defina senhas fortes para `MYSQL_ROOT_PASSWOR
 docker compose up --build -d
 ```
 
-Acesse [http://localhost:8080](http://localhost:8080). O Compose inicia o MySQL, a API e a interface na rede privada `bateponto-network`; somente a interface é publicada na máquina hospedeira. O banco é inicializado na primeira execução com as tabelas do sistema e o usuário inicial `rh@instituicao.sp.gov.br` (senha `987654`). Altere essa senha antes de usar o sistema em produção.
+Acesse [http://localhost:8080](http://localhost:8080). O Compose constrói a API e a interface a partir do código deste repositório, inicia o MySQL e mantém os serviços na rede privada `bateponto-network`; somente a interface é publicada na máquina hospedeira. Gestores podem abrir **Folha de Ponto** para consultar, imprimir ou salvar em PDF os registros mensais dos funcionários. O banco é inicializado na primeira execução com as tabelas do sistema e o usuário inicial `rh@instituicao.sp.gov.br` (senha `987654`). Altere essa senha antes de usar o sistema em produção.
 
 Os dados do MySQL ficam no volume `mysql_data`. Os scripts em `database.sql` só são executados quando esse volume é criado pela primeira vez. Para parar os serviços, use `docker compose down`; para apagar também o banco persistido, use `docker compose down -v`.
 
