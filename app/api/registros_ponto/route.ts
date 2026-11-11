@@ -90,7 +90,10 @@ export async function GET(request: NextRequest) {
         rp.servidor_id,
         s.nome_completo,
         DATE_FORMAT(rp.data, '%Y-%m-%d') AS data,
-        TIME_FORMAT(rp.entrada, '%H:%i') AS entrada,
+        CASE
+          WHEN rp.status = 'Falta' THEN NULL
+          ELSE TIME_FORMAT(rp.entrada, '%H:%i')
+        END AS entrada,
         TIME_FORMAT(rp.saida, '%H:%i') AS saida,
         TIME_FORMAT(rp.horario_previsto, '%H:%i') AS horario_previsto,
         rp.atraso_minutos,
@@ -146,6 +149,7 @@ export async function POST(request: NextRequest) {
         FROM registros_ponto
         WHERE servidor_id = ?
           AND data = ?
+          AND entrada IS NOT NULL
           AND saida IS NULL
         ORDER BY id DESC
         LIMIT 1

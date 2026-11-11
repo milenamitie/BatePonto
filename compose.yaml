@@ -1,11 +1,43 @@
 services:
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: ${DB_NAME:-bateponto}
+      MYSQL_USER: ${DB_USER:-bateponto}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-bateponto123}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root123}
+    ports:
+      - "${MYSQL_PORT:-3307}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$${MYSQL_ROOT_PASSWORD} --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    restart: unless-stopped
+
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
     ports:
       - "3000:3000"
     environment:
-      DB_HOST: host.docker.internal
-      DB_USER: root
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_NAME: bateponto
-      DB_PORT: 3306
+      NODE_ENV: production
+      PORT: "3000"
+      DB_HOST: db
+      DB_PORT: ${DB_PORT:-3306}
+      DB_USER: ${DB_USER:-bateponto}
+      DB_PASSWORD: ${DB_PASSWORD:-bateponto123}
+      DB_NAME: ${DB_NAME:-bateponto}
+      SESSION_SECRET: ${SESSION_SECRET:-troque-este-segredo}
+    restart: unless-stopped
+
+volumes:
+  mysql_data:

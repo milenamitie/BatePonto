@@ -75,6 +75,7 @@ function formatarDuracao(minutos: number) {
 }
 
 function statusRegistro(registro: Registro) {
+  if (registro.status === "Falta") return "Falta";
   if (registro.status === "Atrasado") return "Atrasado";
   if (registro.status === "Sem grade") return "Sem grade";
   if (registro.entrada && !registro.saida) return "Em andamento";
@@ -282,7 +283,7 @@ export default function GerarPdfPage() {
         ];
         if (indice % 2 === 1) retangulo(margem, y, largura - margem * 2, 20, "0.96 0.96 0.96");
         valores.forEach((valor, i) => {
-          const cor = i === 6 ? (status === "Regular" ? "0.00 0.48 0.31" : status === "Atrasado" ? "0.82 0.35 0.00" : "0.35 0.35 0.35") : (i === 0 || i === 5 ? preto : cinza);
+          const cor = i === 6 ? (status === "Regular" ? "0.00 0.48 0.31" : status === "Atrasado" ? "0.82 0.35 0.00" : status === "Falta" ? "0.82 0.00 0.00" : "0.35 0.35 0.35") : (i === 0 || i === 5 ? preto : cinza);
           texto(colunas[i].x + 5, y + 13, 8, valor.slice(0, 22), i === 0 || i === 5 || i === 6, cor);
         });
         linha(margem, y + 20, largura - margem);
@@ -420,7 +421,7 @@ export default function GerarPdfPage() {
                         <td>{registro.entrada || "—"}{registro.atraso_minutos > 0 && <small className="pdfAtraso">+{registro.atraso_minutos} min</small>}</td>
                         <td>{registro.saida || "—"}</td>
                         <td className="pdfTotal">{registro.entrada && registro.saida ? formatarDuracao(minutosTrabalhados(registro.entrada, registro.saida)) : "—"}</td>
-                        <td><span className={`pdfStatus ${status === "Regular" ? "regular" : status === "Atrasado" ? "atrasado" : status === "Sem grade" ? "semGrade" : "pendente"}`}>{status}</span></td>
+                        <td><span className={`pdfStatus ${status === "Regular" ? "regular" : status === "Atrasado" ? "atrasado" : status === "Falta" ? "falta" : status === "Sem grade" ? "semGrade" : "pendente"}`}>{status}</span></td>
                       </tr>;
                     })}
                   </tbody>

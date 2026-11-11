@@ -2,19 +2,44 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+### Desenvolvimento local
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### Docker
+
+Crie o arquivo de ambiente a partir do exemplo:
+
+```bash
+cp .env.example .env
+```
+
+Em seguida, suba os serviços da aplicação e do banco de dados:
+
+```bash
+docker compose up --build
+```
+
+A aplicação ficará disponível em [http://localhost:3000](http://localhost:3000).
+
+The database is created automatically by the `db` service in Docker Compose using MySQL.
+
+On a new database volume, Docker creates the application tables from
+`db/init/001_schema.sql`. If the database container already has a volume, apply
+the schema once with:
+
+```bash
+docker compose exec -T db sh -lc 'mysql -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE" < /docker-entrypoint-initdb.d/001_schema.sql'
+```
+
+The schema does not create user accounts. Import the existing application data
+or create authorized accounts before signing in; there are no default login
+credentials.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 

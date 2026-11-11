@@ -9,8 +9,6 @@ const links = [
   { href: "/pagina_gestao", label: "Painel" },
   { href: "/pagina_gestao/aprovacoes", label: "Aprovações" },
   { href: "/pagina_gestao/acompanhamento", label: "Folha de Ponto" },
-  { href: "/pagina_gestao/alertas", label: "Alertas" },
-  { href: "/pagina_gestao/relatorios", label: "Relatórios" },
 ];
 
 export default function GestaoNav() {

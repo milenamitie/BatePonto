@@ -2060,6 +2060,10 @@ footer {
   color: #009b6d;
 }
 
+.historicoStatusFalta {
+  color: #d60000;
+}
+
 .historicoStatusDivergente,
 .historicoStatusPendente {
   color: #df8500;
@@ -5814,6 +5818,10 @@ footer {
   color: #d97706;
 }
 
+.pdfStatus.falta {
+  color: #d60000;
+}
+
 .pdfStatus.semGrade {
   color: #777;
 }
@@ -6807,5 +6815,231 @@ footer {
 
   .aprovacaoObservacao {
     padding: 10px 12px;
+  }
+}
+
+.gestaoFolhaCabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+.gestaoFolhaCabecalho h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.gestaoFolhaCabecalho p {
+  margin: 8px 0 0;
+  color: #777;
+  font-size: 13px;
+}
+
+.gestaoFolhaCabecalho button {
+  min-height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 4px;
+  background: #d90000;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.gestaoFolhaCabecalho button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+.gestaoFolhaFiltros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 22px;
+  padding: 18px;
+  border: 1px solid #e2e2e2;
+  background: #fff;
+}
+
+.gestaoFolhaFiltros label {
+  display: flex;
+  flex: 1 1 240px;
+  flex-direction: column;
+  gap: 7px;
+  color: #555;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.gestaoFolhaFiltros select,
+.gestaoFolhaFiltros input {
+  width: 100%;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+  background: #fff;
+  color: #222;
+  font: inherit;
+}
+
+.gestaoFolhaServidor {
+  margin: 0 30px 22px;
+  padding: 22px;
+  border: 1px solid #e2e2e2;
+  background: #fff;
+  break-inside: avoid;
+}
+
+.gestaoFolhaServidorCabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 17px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.gestaoFolhaServidorCabecalho > div:first-child > span {
+  color: #d90000;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .8px;
+}
+
+.gestaoFolhaServidorCabecalho h2 {
+  margin: 8px 0 5px;
+  font-size: 18px;
+}
+
+.gestaoFolhaServidorCabecalho p {
+  margin: 0;
+  color: #777;
+  font-size: 11px;
+}
+
+.gestaoFolhaResumo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  color: #777;
+  font-size: 10px;
+  text-align: right;
+}
+
+.gestaoFolhaResumo strong {
+  color: #111;
+  font-size: 17px;
+}
+
+.gestaoFolhaResumo small {
+  font-size: 10px;
+}
+
+.gestaoFolhaTabelaRolagem {
+  overflow-x: auto;
+}
+
+.gestaoFolhaTabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.gestaoFolhaTabela th {
+  padding: 10px 8px;
+  background: #222;
+  color: #fff;
+  font-size: 9px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.gestaoFolhaTabela td {
+  padding: 9px 8px;
+  border-bottom: 1px solid #eee;
+  color: #555;
+  white-space: nowrap;
+}
+
+.gestaoFolhaTabela tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.gestaoFolhaTabela td:first-child {
+  color: #111;
+  font-weight: 700;
+}
+
+.gestaoFolhaMensagem {
+  padding: 20px 0;
+  color: #777;
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  .gestaoFolhaCabecalho,
+  .gestaoFolhaServidorCabecalho {
+    flex-direction: column;
+  }
+
+  .gestaoFolhaResumo {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .gestaoFolhaServidor {
+    margin: 0 12px 16px;
+    padding: 15px;
+  }
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 12mm;
+  }
+
+  body,
+  .gestaoPagina {
+    background: #fff !important;
+  }
+
+  .gestaoFolhaOcultar {
+    display: none !important;
+  }
+
+  .gestaoFolhaServidor {
+    margin: 0 0 10mm;
+    padding: 0;
+    border: 0;
+    break-inside: avoid;
+  }
+
+  .gestaoFolhaServidor:not(:last-child) {
+    break-after: page;
+  }
+
+  .gestaoFolhaTabelaRolagem {
+    overflow: visible;
+  }
+
+  .gestaoFolhaTabela {
+    font-size: 9px;
+  }
+
+  .gestaoFolhaTabela th,
+  .gestaoFolhaTabela td {
+    padding: 6px 5px;
+  }
+
+  .gestaoFolhaTabela th {
+    background: #222 !important;
+    color: #fff !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
   }
 }

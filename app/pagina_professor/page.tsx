@@ -185,6 +185,10 @@ export default function PaginaProfessor() {
   }
 
   function statusRegistro(registro: Registro) {
+    if (registro.status === "Falta") {
+      return "Ausência";
+    }
+
     if (registro.status === "Atrasado") {
       return "Atrasado";
     }

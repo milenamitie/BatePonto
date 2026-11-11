@@ -183,34 +183,6 @@ export default function PaginaGestao() {
             )}
           </div>
 
-          <div className="gestaoCard gestaoAlertas">
-            <div className="gestaoCardCabecalho">
-              <h2>Alertas recentes</h2>
-              <span className="gestaoEmBreve">EM BREVE</span>
-            </div>
-
-            <div className="gestaoAlertaInfo">
-              <span>!</span>
-              <div>
-                <strong>Monitoramento de frequência</strong>
-                <p>
-                  Os alertas de divergências e registros de ponto serão exibidos
-                  aqui quando conectarmos o módulo de frequência.
-                </p>
-              </div>
-            </div>
-
-            <div className="gestaoAlertaInfo gestaoAlertaNeutro">
-              <span>i</span>
-              <div>
-                <strong>Acompanhamento institucional</strong>
-                <p>
-                  As informações serão atualizadas conforme os registros do
-                  sistema forem integrados.
-                </p>
-              </div>
-            </div>
-          </div>
         </section>
       </div>
     </main>

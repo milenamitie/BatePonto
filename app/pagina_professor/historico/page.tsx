@@ -244,6 +244,10 @@ export default function HistoricoProfessor() {
   }
 
   function statusRegistro(registro: Registro) {
+    if (registro.status === "Falta") {
+      return "Falta";
+    }
+
     if (registro.status === "Atrasado") {
       return "Divergente";
     }
