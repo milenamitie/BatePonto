@@ -2,13 +2,21 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Docker Compose
 
-Copie `.env.example` para `.env` e defina senhas fortes para `MYSQL_ROOT_PASSWORD` e `DB_PASSWORD`. Em seguida, inicie os três serviços:
+Copie `.env.example` para `.env` e defina senhas fortes para `MYSQL_ROOT_PASSWORD` e `DB_PASSWORD`.
+
+Se já houver um MySQL do BatePonto em execução na rede `bateponto-network`, inicie a API e a interface sem criar outro banco:
 
 ```bash
 docker compose up --build -d
 ```
 
-Acesse [http://localhost:8080](http://localhost:8080). O Compose constrói a API e a interface a partir do código deste repositório, inicia o MySQL e mantém os serviços na rede privada `bateponto-network`; somente a interface é publicada na máquina hospedeira. Gestores podem abrir **Folha de Ponto** para consultar, imprimir ou salvar em PDF os registros mensais dos funcionários. O banco é inicializado na primeira execução com as tabelas do sistema e o usuário inicial `rh@instituicao.sp.gov.br` (senha `987654`). Altere essa senha antes de usar o sistema em produção.
+Para uma instalação nova, sem banco existente na rede, inicie também o MySQL incluído:
+
+```bash
+docker compose --profile database up --build -d
+```
+
+Não inicie o perfil `database` se outro MySQL já estiver usando o volume `mysql_data`. Acesse [http://localhost:8080](http://localhost:8080). O Compose constrói a API e a interface a partir do código deste repositório; somente a interface é publicada na máquina hospedeira. Gestores podem abrir **Folha de Ponto** para consultar, imprimir ou salvar em PDF os registros mensais dos funcionários. Em uma instalação nova, o banco é inicializado com as tabelas do sistema e o usuário inicial `rh@instituicao.sp.gov.br` (senha `987654`). Altere essa senha antes de usar o sistema em produção.
 
 Os dados do MySQL ficam no volume `mysql_data`. Os scripts em `database.sql` só são executados quando esse volume é criado pela primeira vez. Para parar os serviços, use `docker compose down`; para apagar também o banco persistido, use `docker compose down -v`.
 
