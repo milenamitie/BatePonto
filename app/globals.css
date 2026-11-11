@@ -2273,6 +2273,204 @@ footer {
   font-size: 10px;
 }
 
+.gestorPainelConteudo {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gestorPainelErro {
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  border: 1px solid #e8b4b4;
+  background: #fff1f1;
+  color: #9e1515;
+}
+
+.gestorIndicadores {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.gestorIndicadores article {
+  display: flex;
+  min-height: 132px;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  border: 1px solid #e2e2e2;
+  background: #fff;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, .04);
+}
+
+.gestorIndicadores article > span {
+  color: #777;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .6px;
+}
+
+.gestorIndicadores article > strong {
+  color: #171717;
+  font-size: 30px;
+  line-height: 1.1;
+}
+
+.gestorIndicadores article > small {
+  color: #777;
+  font-size: 12px;
+}
+
+.gestorPainelGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  align-items: start;
+  gap: 20px;
+}
+
+.gestorAtividade {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid #e2e2e2;
+  background: #fff;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, .04);
+}
+
+.gestorAtividadeCabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.gestorAtividadeCabecalho h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.gestorAtividadeCabecalho p {
+  margin: 0;
+  color: #777;
+  font-size: 12px;
+}
+
+.gestorAtividadeCabecalho a {
+  flex: 0 0 auto;
+  padding-top: 3px;
+  color: #c90000;
+  font-size: 10px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.gestorTabelaRolagem {
+  overflow-x: auto;
+}
+
+.gestorTabelaAtividade {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.gestorTabelaAtividade th,
+.gestorTabelaAtividade td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.gestorTabelaAtividade th {
+  color: #777;
+  font-size: 10px;
+  letter-spacing: .4px;
+}
+
+.gestorTabelaAtividade td:first-child {
+  min-width: 170px;
+  font-weight: 650;
+  white-space: normal;
+}
+
+.gestorStatusPonto {
+  display: inline-flex;
+  padding: 4px 8px;
+  border-radius: 20px;
+  background: #eaf5ee;
+  color: #21633b;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.gestorStatusPonto.atrasado {
+  background: #fff3dc;
+  color: #805600;
+}
+
+.gestorStatusPonto.falta {
+  background: #ffebeb;
+  color: #a61b1b;
+}
+
+.gestorPainelVazio {
+  display: flex;
+  min-height: 120px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #777;
+  text-align: center;
+  font-size: 12px;
+}
+
+.gestorPainelVazio strong {
+  color: #333;
+  font-size: 14px;
+}
+
+.gestorFolhaAtalho {
+  display: flex;
+  min-height: 210px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 22px;
+  border: 1px solid #e2e2e2;
+  background: #fff;
+  color: #111;
+  text-decoration: none;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, .04);
+}
+
+.gestorFolhaAtalho:hover {
+  border-color: #d90000;
+}
+
+.gestorFolhaAtalho > span {
+  color: #d90000;
+  font-size: 26px;
+}
+
+.gestorFolhaAtalho > strong {
+  font-size: 18px;
+}
+
+.gestorFolhaAtalho > small {
+  color: #777;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.gestorFolhaAtalho > b {
+  margin-top: auto;
+  color: #d90000;
+  font-size: 10px;
+}
+
 .gestorFolhaControles {
   max-width: 1200px;
   margin: 0 auto;
@@ -2440,6 +2638,32 @@ footer {
 
   .gestorInicioCabecalho,
   .gestorFolhaServidorCabecalho {
+    flex-direction: column;
+  }
+
+  .gestorIndicadores {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .gestorIndicadores article {
+    min-height: 118px;
+    padding: 15px;
+  }
+
+  .gestorIndicadores article > strong {
+    font-size: 25px;
+  }
+
+  .gestorPainelGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .gestorAtividade {
+    padding: 16px;
+  }
+
+  .gestorAtividadeCabecalho {
     flex-direction: column;
   }
 
