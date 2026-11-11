@@ -20,16 +20,14 @@ Não inicie o perfil `database` se outro MySQL já estiver usando o volume `mysq
 
 Os dados do MySQL ficam no volume `mysql_data`. Os scripts em `database.sql` só são executados quando esse volume é criado pela primeira vez. Para parar os serviços, use `docker compose down`; para apagar também o banco persistido, use `docker compose down -v`.
 
-As imagens atualizadas da interface e da API são publicadas no Docker Hub como `milenamitie/frontend-bateponto:latest` e `milenamitie/backend-bateponto:latest`. Para publicar novas versões, autentique-se, construa e envie:
+Cada push de alterações da aplicação para `main` publica automaticamente as imagens no GitHub Container Registry:
 
-```bash
-docker login
-docker compose build backend-bateponto frontend-bateponto
-docker push milenamitie/backend-bateponto:latest
-docker push milenamitie/frontend-bateponto:latest
+```text
+ghcr.io/milenamitie/bateponto-backend:latest
+ghcr.io/milenamitie/bateponto-frontend:latest
 ```
 
-Para baixar as imagens publicadas e atualizar a interface e a API sem recriar o banco existente:
+Após a primeira publicação, defina os pacotes `bateponto-backend` e `bateponto-frontend` como públicos nas configurações de cada pacote no GitHub para permitir downloads sem autenticação. Para baixar as imagens e atualizar a interface e a API sem recriar o banco:
 
 ```bash
 docker compose pull backend-bateponto frontend-bateponto

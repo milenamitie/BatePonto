@@ -24,7 +24,7 @@ services:
       start_period: 30s
 
   backend-bateponto:
-    image: milenamitie/backend-bateponto:latest
+    image: ghcr.io/milenamitie/bateponto-backend:latest
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -49,7 +49,7 @@ services:
       start_period: 15s
 
   frontend-bateponto:
-    image: milenamitie/frontend-bateponto:latest
+    image: ghcr.io/milenamitie/bateponto-frontend:latest
     build:
       context: .
       dockerfile: dockerfile
