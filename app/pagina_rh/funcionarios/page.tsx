@@ -321,7 +321,7 @@ export default function Funcionarios() {
                     valor
                   )
                 }
-                placeholder="Ex.: joao.silva@institucional.sp..gov.br"
+                placeholder="Ex.: joao.silva@institucional.sp.gov.br"
               />
 
             </div>

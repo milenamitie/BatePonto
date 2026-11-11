@@ -11,6 +11,7 @@ type Solicitacao = {
   data: string;
   motivo: string;
   observacoes: string;
+  horarioCompensacao?: string;
   horas: string;
   anexos: string[];
   status: "Pendente" | "Aprovado" | "Reprovado";
@@ -31,6 +32,7 @@ export default function JustificativasProfessor() {
   const [data, setData] = useState("");
   const [motivo, setMotivo] = useState("");
   const [observacoes, setObservacoes] = useState("");
+  const [horarioCompensacao, setHorarioCompensacao] = useState("");
   const [horas, setHoras] = useState("");
   const [arquivos, setArquivos] = useState<File[]>([]);
   const [solicitacoes, setSolicitacoes] = useState<Solicitacao[]>([]);
@@ -91,6 +93,7 @@ export default function JustificativasProfessor() {
       data,
       motivo,
       observacoes,
+      horarioCompensacao: tipo === "Compensação" ? horarioCompensacao : "",
       horas: tipo === "Compensação" ? horas : "",
       anexos: arquivos.map((arquivo) => arquivo.name),
       status: "Pendente",
@@ -104,6 +107,7 @@ export default function JustificativasProfessor() {
     setData("");
     setMotivo("");
     setObservacoes("");
+    setHorarioCompensacao("");
     setHoras("");
     setArquivos([]);
     const campoArquivo = document.getElementById("anexosSolicitacao") as HTMLInputElement | null;
@@ -194,7 +198,7 @@ export default function JustificativasProfessor() {
                     </label>
                     <label className="justCampo">
                       <span className="justLabel">HORÁRIO DA COMPENSAÇÃO</span>
-                      <input type="text" placeholder="Ex: 08:00 — 09:30" value={observacoes} onChange={(evento) => setObservacoes(evento.target.value)} required />
+                      <input type="text" placeholder="Ex: 08:00 — 09:30" value={horarioCompensacao} onChange={(evento) => setHorarioCompensacao(evento.target.value)} required />
                     </label>
                     <label className="justCampo">
                       <span className="justLabel">QUANTIDADE DE HORAS</span>
@@ -257,6 +261,8 @@ export default function JustificativasProfessor() {
                       <span className={solicitacao.tipo === "Compensação" ? "justTagCompensacao" : "justTagJustificativa"}>{solicitacao.tipo.toUpperCase()}</span>
                       <small>por Gestão de Pessoas</small>
                     </div>
+                    {solicitacao.horarioCompensacao && <p className="justItemDetalhe">Horário da compensação: {solicitacao.horarioCompensacao}</p>}
+                    {solicitacao.observacoes && <p className="justItemDetalhe">Motivo/observações: {solicitacao.observacoes}</p>}
                     {solicitacao.horas && <p className="justItemDetalhe">Horas solicitadas: {solicitacao.horas}</p>}
                     {solicitacao.anexos.length > 0 && <p className="justItemDetalhe">Anexos: {solicitacao.anexos.join(", ")}</p>}
                   </article>

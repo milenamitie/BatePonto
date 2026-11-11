@@ -4,11 +4,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 type ProfessorNavProps = {
-  paginaAtiva: "folha" | "grade" | "historico" | "justificativas";
+  paginaAtiva: "folha" | "grade" | "historico" | "justificativas" | "notificacoes" | "gerar_pdf";
+  notificacoesNaoLidas?: number;
   nomeProfessor?: string;
 };
 
-export default function ProfessorNav({ paginaAtiva, nomeProfessor = "Professor" }: ProfessorNavProps) {
+export default function ProfessorNav({ paginaAtiva, nomeProfessor = "Professor", notificacoesNaoLidas = 0 }: ProfessorNavProps) {
   const [menuAberto, setMenuAberto] = useState(false);
   const router = useRouter();
 
@@ -67,8 +68,8 @@ export default function ProfessorNav({ paginaAtiva, nomeProfessor = "Professor" 
         <a className={paginaAtiva === "grade" ? "ativo" : ""} href="/pagina_professor/grade">Grade de Aulas</a>
         <a className={paginaAtiva === "historico" ? "ativo" : ""} href="/pagina_professor/historico">Histórico</a>
         <a className={paginaAtiva === "justificativas" ? "ativo" : ""} href="/pagina_professor/justificativas">Justificativas &amp; Compensações</a>
-        <a href="#">Notificações</a>
-        <a href="#">Gerar PDF</a>
+        <a className={paginaAtiva === "notificacoes" ? "ativo" : ""} href="/pagina_professor/notificacoes">Notificações{notificacoesNaoLidas > 0 && <span className="professorNavBadge">{notificacoesNaoLidas}</span>}</a>
+        <a className={paginaAtiva === "gerar_pdf" ? "ativo" : ""} href="/pagina_professor/gerar_pdf">Gerar PDF</a>
       </nav>
     </header>
   );
